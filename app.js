@@ -10,8 +10,8 @@ import bodyParser from "body-parser";
 
 //Routers
 import indexRouter from "./routes/indexRouter.js";
-import userRouter from "./routes/userRouter.js";
-import signupRouter from "./routes/signupRouter.js";
+import userRouter from "./routes/userRouter.js";  
+import signupRouter from "./routes/auth.js";
 
 const port = process.env.PORT || 3000;
 const __filename = fileURLToPath(import.meta.url);
