@@ -12,6 +12,7 @@ import bodyParser from "body-parser";
 import indexRouter from "./routes/indexRouter.js";
 import userRouter from "./routes/userRouter.js";  
 import signupRouter from "./routes/auth.js";
+import postRouter from "./routes/posts.js";
 
 const port = process.env.PORT || 3000;
 const __filename = fileURLToPath(import.meta.url);
@@ -25,7 +26,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 app.use(indexRouter);
-app.use("/register", signupRouter);
+app.use(signupRouter);
+app.use("/api/posts", postRouter);
 //app.use("/user", userRouter);
 
 try{
