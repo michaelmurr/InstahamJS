@@ -1,3 +1,4 @@
+//Modules
 import express from "express";
 import https from "https";
 import path from "path";
@@ -7,6 +8,7 @@ import { fileURLToPath } from "url";
 import env from "dotenv/config";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
+import cors from "cors";
 
 //Routers
 import indexRouter from "./routes/indexRouter.js";
@@ -20,6 +22,13 @@ const __dirname = dirname(__filename);
 
 const app = express();
 
+const corsOptions = {
+    origin:"*",
+    credentials: true,
+    optionSuccessStatus: 200,
+}
+
+app.use(cors(corsOptions));
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use(bodyParser.urlencoded({extended: true}));
