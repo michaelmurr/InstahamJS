@@ -5,7 +5,7 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  email:{
+  email: {
     type: String,
     required: true,
   },
@@ -15,12 +15,12 @@ const userSchema = mongoose.Schema({
   },
   date_joined: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
-  posts:{
+  posts: [{
     type: String,
-    required: false
-  }
+    required: false,
+  }],
 });
 
 export default mongoose.model("Users", userSchema);
