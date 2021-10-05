@@ -11,11 +11,17 @@
 
     <script>
       function fetchJson() {
-        fetch("http://localhost:3000/api/posts").then((res) => {
-          res.json();
-        }).then((data) => {
-            console.log(data);
-        });
+        fetch("http://localhost:3000/api/posts").then((res) =>
+          res
+            .json()
+            .then((data) => ({
+              data: data,
+              status: res.status,
+            }))
+            .then((data) => {
+              console.log(data);
+            })
+        );
       }
     </script>
   </body>
