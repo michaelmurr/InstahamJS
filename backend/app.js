@@ -9,6 +9,7 @@ import env from "dotenv/config";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import cors from "cors";
+import dotenv from "dotenv";
 
 //Routers
 import indexRouter from "./routes/indexRouter.js";
