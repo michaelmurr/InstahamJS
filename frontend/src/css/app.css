@@ -24,3 +24,12 @@ Form{
 .formInput{
     margin: 12px 0;
 }
+
+img{
+    height: auto;
+    width: 10rem;
+}
+
+li{
+    color: #FFF;
+}
