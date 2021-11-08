@@ -1,15 +1,15 @@
 //Modules
-import express from "express";
-import https from "https";
-import path from "path";
-import { dirname } from "path";
 import fs from "fs";
-import { fileURLToPath } from "url";
-import env from "dotenv/config";
-import mongoose from "mongoose";
-import bodyParser from "body-parser";
 import cors from "cors";
+import path from "path";
+import https from "https";
 import dotenv from "dotenv";
+import express from "express";
+import { dirname } from "path";
+import mongoose from "mongoose";
+import env from "dotenv/config";
+import { fileURLToPath } from "url";
+import bodyParser from "body-parser";
 
 //Routers
 import indexRouter from "./routes/indexRouter.js";
@@ -17,7 +17,7 @@ import userRouter from "./routes/userRouter.js";
 import signupRouter from "./routes/auth.js";
 import postRouter from "./routes/posts.js";
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 

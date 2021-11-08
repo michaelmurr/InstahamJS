@@ -1,0 +1,35 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.navContainer{
+    background-color: rgb(29, 27, 32);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 10%;
+    
+}
+
+img{
+    height: 1.5rem;
+    width: auto;
+}
+
+ul{
+    list-style: none;
+}
+
+ul li{
+    display: inline-block;
+    padding: 0px 20px;
+}
+
+ul li a{
+    text-decoration: none;
+    color: #FFF;
+    margin: 0 5em;
+}
+

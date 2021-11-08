@@ -1,21 +1,23 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../src/css/app.css";
+import "../css/nav.css";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import signupForm from "./signupForm";
 import Upload from "./upload";
+import { Button } from "react-bootstrap";
 
 function Nav() {
     return (
+        <div className="navContainer">
+            <a href="/"><img src="logo.png" /></a>
             <nav className="navbar">
-                <a><img src="logo.png" /></a>
                 <ul className="navList">
-                        
-                        <li>
-                        <Link to="/signup">Sign Up</Link>
-                        </li>
+                    <li>
+                        <Link to="/upload">Create a new Post</Link>
+                    </li>
                 </ul>
             </nav>
+            <Button>Sign Up</Button>
+        </div>
     );
 }
 

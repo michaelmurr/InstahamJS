@@ -1,5 +1,5 @@
 import React from "react";
-import "./css/app.css";
+import "../css/signupForm.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Form, FloatingLabel } from "react-bootstrap";
 

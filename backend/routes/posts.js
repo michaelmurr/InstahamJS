@@ -3,7 +3,7 @@ import {verify} from "./verifyToken.js";
 
 const router = express.Router();
 
-router.get("/:userID/:posts/", /*verify,*/ (req, res) => {
+router.get("/", /*verify,*/ (req, res) => {
 
     res.json({
         posts:{
