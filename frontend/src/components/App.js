@@ -15,7 +15,9 @@ class App extends React.Component {
   }
 
   render() {
-    this.fetchPosts();
+
+    let posts = this.fetchPosts();
+
     return (
       <div className="App">
         <Router>
@@ -24,7 +26,13 @@ class App extends React.Component {
             <Route path="/upload" element={<Upload />} />
           </Routes>
         </Router>
-
+        <div className="postContainer">
+        {posts.foreach( post => {
+          <div className="post">
+            {this.post}
+          </div>
+        })}
+        </div>
 
 
       </div>

@@ -5,6 +5,20 @@ const router = express.Router();
 
 router.get("/", /*verify,*/ (req, res) => {
 
+/* ownerID, filename, uploadDate, likes*/
+/*
+let postArray = [
+    {
+
+    },
+    {
+
+    },
+    {
+
+    },
+]
+*/
     res.json({
         posts:{
             title: "My first post",
