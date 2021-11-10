@@ -20,7 +20,7 @@ let postArray = [
 ]
 */
     res.json({
-        posts:{
+        postData:{
             title: "My first post",
             description:"Random data you shouldnt access" 
         }

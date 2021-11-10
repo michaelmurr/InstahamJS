@@ -10,8 +10,8 @@ class App extends React.Component {
 
   //fetches the 10 most recent posts
   async fetchPosts(){
-    let posts = await fetch("https://localhost:4000/api/posts");
-    console.log(posts);
+    let posts = await fetch("http://localhost:4000/api/posts");
+    console.log(posts.body);
   }
 
   render() {
@@ -27,11 +27,6 @@ class App extends React.Component {
           </Routes>
         </Router>
         <div className="postContainer">
-        {posts.foreach( post => {
-          <div className="post">
-            {this.post}
-          </div>
-        })}
         </div>
 
 
