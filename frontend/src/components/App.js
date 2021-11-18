@@ -2,34 +2,46 @@ import "../css/app.css";
 import React from "react";
 import Upload from "./upload";
 import Nav from "../components/nav";
-import SignupForm from "./signupForm.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Button } from "react-bootstrap";
+
+import SignupForm from "../components/signupForm";
 
 class App extends React.Component {
 
-  //fetches the 10 most recent posts
-  async fetchPosts(){
-    let posts = await fetch("http://localhost:4000/api/posts");
-    console.log(posts.body);
+  state = {
+    loading: true,
+    posts: [],
+  }
+
+  async componentDidMount() {
+    const response = await fetch("http://localhost:4000/api/posts");
+    const data = await response.json();
+    this.setState({ posts: data, loading: false });
   }
 
   render() {
-
-    let posts = this.fetchPosts();
-
     return (
       <div className="App">
         <Router>
           <Nav />
+          <SignupForm />
           <Routes>
+            <Route path="/signup" element={<signupForm />} />
             <Route path="/upload" element={<Upload />} />
           </Routes>
         </Router>
-        <div className="postContainer">
+
+        <div className="fetchTest">
+          {this.state.posts.map(post => (
+            <div key={post.ownerID} id={post.ownerID}>
+              <div>{post.filename}</div>
+              <div>{post.uploadDate}</div>
+              <div>Likes: {post.likes}</div>
+            </div>
+          ))}
         </div>
-
-
       </div>
     );
   }

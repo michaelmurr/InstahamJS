@@ -9,7 +9,7 @@ class signupForm extends React.Component {
     super(props);
 
     const inputStyle = {
-      backgroundColor: "#555",
+      backgroundColor: "#000",
       border: "0 solid transparent",
 
     }

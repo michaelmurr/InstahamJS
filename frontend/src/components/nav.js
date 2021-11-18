@@ -16,7 +16,10 @@ function Nav() {
                     </li>
                 </ul>
             </nav>
+            <Link to="/signup">
+
             <Button>Sign Up</Button>
+            </Link>
         </div>
     );
 }
