@@ -1,8 +1,7 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../css/nav.css";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import Upload from "./upload";
+import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 
 function Nav() {
@@ -17,8 +16,7 @@ function Nav() {
                 </ul>
             </nav>
             <Link to="/signup">
-
-            <Button>Sign Up</Button>
+                <Button>Sign Up</Button>
             </Link>
         </div>
     );

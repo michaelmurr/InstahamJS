@@ -1,10 +1,10 @@
 import "../css/app.css";
+import "../css/posts.css";
 import React from "react";
 import Upload from "./upload";
 import Nav from "../components/nav";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { Button } from "react-bootstrap";
 
 import SignupForm from "../components/signupForm";
 
@@ -26,16 +26,15 @@ class App extends React.Component {
       <div className="App">
         <Router>
           <Nav />
-          <SignupForm />
           <Routes>
-            <Route path="/signup" element={<signupForm />} />
+            <Route path="/signup" element={<SignupForm />} />
             <Route path="/upload" element={<Upload />} />
           </Routes>
         </Router>
 
-        <div className="fetchTest">
+        <div className="fetchedPosts">
           {this.state.posts.map(post => (
-            <div key={post.ownerID} id={post.ownerID}>
+            <div key={post.ownerID} id={post.ownerID} className="postContainer">
               <div>{post.filename}</div>
               <div>{post.uploadDate}</div>
               <div>Likes: {post.likes}</div>
