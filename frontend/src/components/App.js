@@ -5,6 +5,7 @@ import Upload from "./upload";
 import Nav from "../components/nav";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Posts from "./posts";
 
 import SignupForm from "../components/signupForm";
 
@@ -31,7 +32,9 @@ class App extends React.Component {
             <Route path="/upload" element={<Upload />} />
           </Routes>
         </Router>
+        <Posts posts={this.state.posts} />
 
+{/* 
         <div className="fetchedPosts">
           {this.state.posts.map(post => (
             <div key={post.ownerID} id={post.ownerID} className="postContainer">
@@ -41,6 +44,7 @@ class App extends React.Component {
             </div>
           ))}
         </div>
+*/}
       </div>
     );
   }

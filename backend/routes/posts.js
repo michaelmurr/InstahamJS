@@ -1,7 +1,19 @@
 import express from "express";
 import { verify } from "./verifyToken.js";
+import path from "path";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
 
 const router = express.Router();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+router.get("/:imageID", (req, res) => {
+    res.sendFile(path.join(__dirname, "../testPost/", req.params.imageID));
+});
+
+
+
 
 router.get("/", /*verify,*/(req, res) => {
 
