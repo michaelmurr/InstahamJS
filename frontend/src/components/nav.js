@@ -15,7 +15,7 @@ function Nav() {
                     </li>
                 </ul>
             </nav>
-            <Link to="/signup">
+            <Link to="/register">
                 <Button>Sign Up</Button>
             </Link>
         </div>

@@ -28,7 +28,7 @@ class App extends React.Component {
         <Router>
           <Nav />
           <Routes>
-            <Route path="/signup" element={<SignupForm />} />
+            <Route path="/register" element={<SignupForm />} />
             <Route path="/upload" element={<Upload />} />
           </Routes>
         </Router>

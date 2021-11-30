@@ -13,8 +13,7 @@ import bodyParser from "body-parser";
 
 //Routers
 import indexRouter from "./routes/indexRouter.js";
-import userRouter from "./routes/userRouter.js";  
-import signupRouter from "./routes/auth.js";
+import authRouter from "./routes/auth.js";
 import postRouter from "./routes/posts.js";
 
 const port = process.env.PORT || 4000;
@@ -36,9 +35,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 app.use(indexRouter);
-app.use(signupRouter);
+app.use(authRouter);
 app.use("/api/posts", postRouter);
-//app.use("/user", userRouter);
 
 try{
     mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true}, () => {
