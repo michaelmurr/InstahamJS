@@ -23,24 +23,23 @@ class signupForm extends React.Component {
       <div className="formContainer">
         <div className="cardContainer">
 
-
-          <Form formAction="/" method="post" className="signupForm">
+          <Form action="localhost:4000/register" method="POST" className="signupForm">
             <Form.Group>
               <FloatingLabel label="Email address" style={this.textStyle}>
-                <Form.Control type="email" placeholder="Email address" className="formInput" style={this.inputStyle} />
+                <Form.Control name="email" type="email" placeholder="Email address" className="formInput" style={this.inputStyle} />
               </FloatingLabel>
               <Form.Text className="text-muted">Your email will never be shared with anyone.</Form.Text>
             </Form.Group>
 
             <Form.Group>
               <FloatingLabel label="Username" style={this.textStyle}>
-                <Form.Control type="text" placeholder="Username" className="formInput" style={this.inputStyle} />
+                <Form.Control name="password" type="text" placeholder="Username" className="formInput" style={this.inputStyle} />
               </FloatingLabel>
             </Form.Group>
 
             <Form.Group>
               <FloatingLabel label="Password" style={this.textStyle}>
-                <Form.Control type="password" placeholder="Password" className="formInput" style={this.inputStyle} />
+                <Form.Control name="password" type="password" placeholder="Password" className="formInput" style={this.inputStyle} />
               </FloatingLabel>
             </Form.Group>
 
