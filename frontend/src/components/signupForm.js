@@ -8,47 +8,39 @@ class signupForm extends React.Component {
   constructor(props) {
     super(props);
 
-    const inputStyle = {
-      backgroundColor: "#000",
-      border: "0 solid transparent",
-
     }
-    const textStyle = {
-      color: "#AAA",
-    }
-  }
 
   render() {
     return (
       <div className="formContainer">
         <div className="cardContainer">
 
-          <Form action="localhost:4000/register" method="POST" className="signupForm">
+          <Form action="http://localhost:4000/register" method="POST" className="signupForm">
             <Form.Group>
-              <FloatingLabel label="Email address" style={this.textStyle}>
-                <Form.Control name="email" type="email" placeholder="Email address" className="formInput" style={this.inputStyle} />
+              <FloatingLabel className="formLabel" label="Email address">
+                <Form.Control name="email" type="email" placeholder="Email address" className="formInput" />
               </FloatingLabel>
               <Form.Text className="text-muted">Your email will never be shared with anyone.</Form.Text>
             </Form.Group>
 
             <Form.Group>
-              <FloatingLabel label="Username" style={this.textStyle}>
-                <Form.Control name="password" type="text" placeholder="Username" className="formInput" style={this.inputStyle} />
+              <FloatingLabel className="formLabel" label="Username">
+                <Form.Control name="password" type="text" placeholder="Username" className="formInput" />
               </FloatingLabel>
             </Form.Group>
 
             <Form.Group>
-              <FloatingLabel label="Password" style={this.textStyle}>
-                <Form.Control name="password" type="password" placeholder="Password" className="formInput" style={this.inputStyle} />
+              <FloatingLabel className="formLabel" label="Password">
+                <Form.Control name="password" type="password" placeholder="Password" className="formInput"/>
               </FloatingLabel>
             </Form.Group>
 
             <Form.Group>
-              <FloatingLabel label="Confim Password" style={this.textStyle}>
-                <Form.Control type="password" placeholder="Confirm Password" className="formInput" style={this.inputStyle} />
+              <FloatingLabel className="formLabel" label="Confim Password">
+                <Form.Control type="password" placeholder="Confirm Password" className="formInput"/>
               </FloatingLabel>
             </Form.Group>
-            <Button type="submit" style={{ backgroundColor: "green", border: "1px solid green" }}>Sign Up</Button>
+            <Button className="submitBtn" type="submit">Create Account</Button>
           </Form>
         </div>
       </div>

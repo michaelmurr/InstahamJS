@@ -15,9 +15,11 @@
     padding: 1.5rem 2rem;
     border-radius: 2%;
 }
+
 .formInput.form-control{
     background-color: rgb(58, 58, 58);
     border: 0px transparent;
+    color: #DDD;
 
 }
 
@@ -27,4 +29,14 @@ Form{
 
 .formInput{
     margin: 12px 0;
+}
+
+.submitBtn{
+    background-color: rgb(0, 128, 0);
+    border: 1px solid rgb(0, 128, 0);
+}
+
+.submitBtn:hover{
+    background-color: rgb(0, 110, 0);
+    border: 1px solid rgb(0, 110, 0);
 }
