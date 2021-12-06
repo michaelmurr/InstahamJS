@@ -9,11 +9,12 @@ class signupForm extends React.Component {
     super(props);
 
     this.state = {
-      username: "",
-      email: "",
-      password: "", //password in plaintext, will be encrypted on server
-      confirm_password: "",
-      message: "WOAH",
+      username,
+      email,
+      password, //password in plaintext, will be encrypted on server
+      confirm_password,
+      formstuff,
+      pw_message,
     }
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -32,45 +33,38 @@ class signupForm extends React.Component {
   //handles the submitting process
   async handleSubmit(event) {
     event.preventDefault();
-    /*
-   let formData = new FormData();
-
-   formData.append("username", this.state.username);
-   formData.append("email", this.state.email);
-   formData.append("password", this.state.password);
-   
-   this.setState({ formstuff: formData});
-   */
-
-    //payload for POSTing with fetch
-    let init = {
-      method: "POST",
-      mode: "cors",
-      headers: { "Content-Type": "multipart/form-data" },
-      body: this.state,
+    
+    if(this.state.password != this.state.confirm_password){
+      this.setState({ pw_message: "Passwords don't match! "});
+      return 0;
     }
-
-    let response = await fetch("http://localhost:4000/register", {
-      method: "POST",
-      mode: "cors",
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify(this.state),
-    });
-    const content = await response.json();
-
-    console.log(content);
+      let formData = new FormData();
+      
+      formData.append("username", this.state.username);
+      formData.append("email", this.state.email);
+      formData.append("password", this.state.password);
+      
+      this.setState({ formstuff: formData});
+      
+      let response = await fetch("http://localhost:4000/register", {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify(this.state.formstuff),
+      });
+      const content = await response.json();
+      
+      console.log(formstuff);
   }
 
   render() {
     return (
       <div className="formContainer">
         <div className="cardContainer">
-
-          <h1 id="msg">{this.state.formstuff}</h1>
 
           <Form onSubmit={this.handleSubmit} className="signupForm">
             <Form.Group>
@@ -127,6 +121,7 @@ class signupForm extends React.Component {
 
                 />
               </FloatingLabel>
+              <Form.Text className="text-muted">{this.state.pw_message}</Form.Text>
             </Form.Group>
 
             <Button className="submitBtn" type="submit">Create Account</Button>
