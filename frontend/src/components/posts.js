@@ -1,6 +1,5 @@
 import "../css/posts.css";
-import React, { Component, useEffect } from 'react';
-import { renderMatches } from "react-router";
+import React from 'react';
 
 function Posts(props) {
 
