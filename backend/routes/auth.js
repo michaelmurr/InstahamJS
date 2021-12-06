@@ -10,6 +10,7 @@ const saltRounds = 10;
 
 //Creating a new user
 router.post("/register", async (req, res) => {
+  /*
   const { error } = registerValidation.validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -32,7 +33,11 @@ router.post("/register", async (req, res) => {
     } catch (err) {
       res.send({ message: err });
     }
-  });
+  });*/
+  console.log("received request!");
+  console.log(req.body.username);
+  res.json({ message: "guess what works"});
+  //res.redirect("http://localhost:3000/");
 });
 
 //Log into existing user
