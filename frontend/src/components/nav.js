@@ -7,7 +7,7 @@ import { Button } from "react-bootstrap";
 function Nav() {
     return (
         <div className="navContainer">
-            <a href="/"><img src="logo.png" /></a>
+            <a href="/"><img src="logo.png" alt="logo" /></a>
             <nav className="navbar">
                 <ul className="navList">
                     <li>
