@@ -9,12 +9,11 @@ class signupForm extends React.Component {
     super(props);
 
     this.state = {
-      username,
-      email,
-      password, //password in plaintext, will be encrypted on server
-      confirm_password,
-      formstuff,
-      pw_message,
+      username: "",
+      email: "",
+      password: "", //password in plaintext, will be encrypted on server
+      confirm_password: "",
+      pw_message: "",
     }
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -33,32 +32,36 @@ class signupForm extends React.Component {
   //handles the submitting process
   async handleSubmit(event) {
     event.preventDefault();
-    
-    if(this.state.password != this.state.confirm_password){
-      this.setState({ pw_message: "Passwords don't match! "});
-      return 0;
-    }
+
+    if (this.state.password === this.state.confirm_password) {
       let formData = new FormData();
-      
+      let rawForm = {};
+
       formData.append("username", this.state.username);
       formData.append("email", this.state.email);
       formData.append("password", this.state.password);
-      
-      this.setState({ formstuff: formData});
-      
+
+      //turn formData into JSON
+      formData.forEach((val, key) => {
+        rawForm[key] = val;
+      });
+
+      let jsonForm = JSON.stringify(rawForm);
+
       let response = await fetch("http://localhost:4000/register", {
         method: "POST",
         mode: "cors",
         headers: {
-          "Accept": "application/json",
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "*",
         },
-        body: JSON.stringify(this.state.formstuff),
+        body: jsonForm,
       });
-      const content = await response.json();
-      
-      console.log(formstuff);
+
+      console.log(response);
+    } else {
+      this.setState({ pw_message: "Passwords don't match! " });
+    }
   }
 
   render() {
