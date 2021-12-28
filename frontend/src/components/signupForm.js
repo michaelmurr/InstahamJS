@@ -4,7 +4,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Form, FloatingLabel } from "react-bootstrap";
 
 class signupForm extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -14,51 +13,52 @@ class signupForm extends React.Component {
       password: "", //password in plaintext, will be encrypted on server
       confirm_password: "",
       pw_message: "",
-    }
+    };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
-    this.handleConfirmPasswordChange = this.handleConfirmPasswordChange.bind(this);
+    this.handleConfirmPasswordChange =
+      this.handleConfirmPasswordChange.bind(this);
   }
 
   //updates local state and appends to formData
-  handleUsernameChange(event) { this.setState({ username: event.target.value }); }
-  handleEmailChange(event) { this.setState({ email: event.target.value }); }
-  handlePasswordChange(event) { this.setState({ password: event.target.value }); }
-  handleConfirmPasswordChange(event) { this.setState({ confirm_password: event.target.value }); }
+  handleUsernameChange(event) {
+    this.setState({ username: event.target.value });
+  }
+  handleEmailChange(event) {
+    this.setState({ email: event.target.value });
+  }
+  handlePasswordChange(event) {
+    this.setState({ password: event.target.value });
+  }
+  handleConfirmPasswordChange(event) {
+    this.setState({ confirm_password: event.target.value });
+  }
 
   //handles the submitting process
   async handleSubmit(event) {
     event.preventDefault();
 
     if (this.state.password === this.state.confirm_password) {
-      let formData = new FormData();
-      let rawForm = {};
+      let data = {
+        username: this.state.username,
+        email: this.state.email,
+        password: this.state.password,
+      };
 
-      formData.append("username", this.state.username);
-      formData.append("email", this.state.email);
-      formData.append("password", this.state.password);
+        const response = await fetch("http://localhost:4000/register", {
+          method: "POST",
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+          body: JSON.stringify(data),
+        });
 
-      //turn formData into JSON
-      formData.forEach((val, key) => {
-        rawForm[key] = val;
-      });
-
-      let jsonForm = JSON.stringify(rawForm);
-
-      let response = await fetch("http://localhost:4000/register", {
-        method: "POST",
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-        body: jsonForm,
-      });
-
-      console.log(response);
+        console.log(response);
     } else {
       this.setState({ pw_message: "Passwords don't match! " });
     }
@@ -68,7 +68,6 @@ class signupForm extends React.Component {
     return (
       <div className="formContainer">
         <div className="cardContainer">
-
           <Form onSubmit={this.handleSubmit} className="signupForm">
             <Form.Group>
               <FloatingLabel className="formLabel" label="Email address">
@@ -79,10 +78,11 @@ class signupForm extends React.Component {
                   type="email"
                   placeholder="Email address"
                   className="formInput"
-
                 />
               </FloatingLabel>
-              <Form.Text className="text-muted">Your email will never be shared with anyone.</Form.Text>
+              <Form.Text className="text-muted">
+                Your email will never be shared with anyone.
+              </Form.Text>
             </Form.Group>
 
             <Form.Group>
@@ -94,7 +94,6 @@ class signupForm extends React.Component {
                   type="text"
                   placeholder="Username"
                   className="formInput"
-
                 />
               </FloatingLabel>
             </Form.Group>
@@ -108,7 +107,6 @@ class signupForm extends React.Component {
                   type="password"
                   placeholder="Password"
                   className="formInput"
-
                 />
               </FloatingLabel>
             </Form.Group>
@@ -121,18 +119,20 @@ class signupForm extends React.Component {
                   type="password"
                   placeholder="Confirm Password"
                   className="formInput"
-
                 />
               </FloatingLabel>
-              <Form.Text className="text-muted">{this.state.pw_message}</Form.Text>
+              <Form.Text className="text-muted">
+                {this.state.pw_message}
+              </Form.Text>
             </Form.Group>
 
-            <Button className="submitBtn" type="submit">Create Account</Button>
-
+            <Button className="submitBtn" type="submit">
+              Create Account
+            </Button>
           </Form>
         </div>
       </div>
-    )
+    );
   }
 }
 
