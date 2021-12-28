@@ -9,57 +9,41 @@ class signupForm extends React.Component {
 
     this.state = {
       username: "",
-      email: "",
       password: "", //password in plaintext, will be encrypted on server
-      confirm_password: "",
       pw_message: "",
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
-    this.handleConfirmPasswordChange =
-      this.handleConfirmPasswordChange.bind(this);
   }
 
   //updates local state and appends to formData
   handleUsernameChange(event) {
     this.setState({ username: event.target.value });
   }
-  handleEmailChange(event) {
-    this.setState({ email: event.target.value });
-  }
   handlePasswordChange(event) {
     this.setState({ password: event.target.value });
-  }
-  handleConfirmPasswordChange(event) {
-    this.setState({ confirm_password: event.target.value });
   }
 
   //handles the submitting process
   async handleSubmit(event) {
     event.preventDefault();
 
-    if (this.state.password === this.state.confirm_password) {
-      let data = {
-        username: this.state.username,
-        email: this.state.email,
-        password: this.state.password,
-      };
+    let data = {
+      username: this.state.username,
+      password: this.state.password,
+    };
 
-      const response = await fetch("http://localhost:4000/register", {
-        method: "POST",
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-        body: JSON.stringify(data),
-      });
-    } else {
-      this.setState({ pw_message: "Passwords don't match! " });
-    }
+    const response = await fetch("http://localhost:4000/login", {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify(data),
+    });
   }
 
   render() {
@@ -67,22 +51,6 @@ class signupForm extends React.Component {
       <div className="formContainer">
         <div className="cardContainer">
           <Form onSubmit={this.handleSubmit} className="signupForm">
-            <Form.Group>
-              <FloatingLabel className="formLabel" label="Email address">
-                <Form.Control
-                  value={this.state.email}
-                  onChange={this.handleEmailChange}
-                  name="email"
-                  type="email"
-                  placeholder="Email address"
-                  className="formInput"
-                />
-              </FloatingLabel>
-              <Form.Text className="text-muted">
-                Your email will never be shared with anyone.
-              </Form.Text>
-            </Form.Group>
-
             <Form.Group>
               <FloatingLabel className="formLabel" label="Username">
                 <Form.Control
@@ -108,24 +76,11 @@ class signupForm extends React.Component {
                 />
               </FloatingLabel>
             </Form.Group>
-
-            <Form.Group>
-              <FloatingLabel className="formLabel" label="Confim Password">
-                <Form.Control
-                  value={this.state.confirm_password}
-                  onChange={this.handleConfirmPasswordChange}
-                  type="password"
-                  placeholder="Confirm Password"
-                  className="formInput"
-                />
-              </FloatingLabel>
-              <Form.Text className="text-muted">
-                {this.state.pw_message}
-              </Form.Text>
-            </Form.Group>
-
+            <Form.Text className="text-muted">
+              {this.state.pw_message}
+            </Form.Text>
             <Button className="submitBtn" type="submit">
-              Create Account
+              Login
             </Button>
           </Form>
         </div>

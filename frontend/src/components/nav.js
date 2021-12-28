@@ -15,6 +15,10 @@ function Nav() {
                     </li>
                 </ul>
             </nav>
+            <Link to="/login">
+                <Button>Sign In</Button>
+            </Link>
+
             <Link to="/register">
                 <Button>Sign Up</Button>
             </Link>

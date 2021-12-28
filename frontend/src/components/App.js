@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Posts from "./posts";
 
 import SignupForm from "../components/signupForm";
+import LoginForm from "../components/loginForm";
 
 class App extends React.Component {
 
@@ -28,23 +29,12 @@ class App extends React.Component {
         <Router>
           <Nav />
           <Routes>
+            <Route path="/login" element={<LoginForm/>} />
             <Route path="/register" element={<SignupForm />} />
             <Route path="/upload" element={<Upload />} />
           </Routes>
         </Router>
         <Posts posts={this.state.posts} />
-
-{/* 
-        <div className="fetchedPosts">
-          {this.state.posts.map(post => (
-            <div key={post.ownerID} id={post.ownerID} className="postContainer">
-              <div>{post.filename}</div>
-              <div>{post.uploadDate}</div>
-              <div>Likes: {post.likes}</div>
-            </div>
-          ))}
-        </div>
-*/}
       </div>
     );
   }
