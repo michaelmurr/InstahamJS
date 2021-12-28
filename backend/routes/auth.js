@@ -10,10 +10,11 @@ const saltRounds = 10;
 
 //Creating a new user
 router.post("/register", async (req, res) => {
-  /*
   const { error } = registerValidation.validate(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
-
+  if (error) {
+    console.log(error.details[0].message);
+    return res.status(400).send(error.details[0].message);
+  }
   const emailExists = await User.findOne({ email: req.body.email });
   if (emailExists) return res.status(400).send("Email already exists");
 
@@ -32,12 +33,9 @@ router.post("/register", async (req, res) => {
       res.send({ User: user.id });
     } catch (err) {
       res.send({ message: err });
+      console.log(err);
     }
-  });*/
-  console.log("received request!");
-  console.log(req.body.username);
-  res.json({ message: "guess what works"});
-  //res.redirect("http://localhost:3000/");
+  });
 });
 
 //Log into existing user
