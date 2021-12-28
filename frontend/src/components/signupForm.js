@@ -58,7 +58,7 @@ class signupForm extends React.Component {
           body: JSON.stringify(data),
         });
 
-        console.log(response);
+        console.log(response.message);
     } else {
       this.setState({ pw_message: "Passwords don't match! " });
     }
