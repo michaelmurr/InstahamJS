@@ -5,10 +5,6 @@ const loginValidation = Joi.object({
         Joi.string()
         .min(4)
         .required(),
-    email: 
-        Joi.string()
-        .required()
-        .email(),
     password: 
         Joi.string()
         .min(6)
