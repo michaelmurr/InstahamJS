@@ -1,137 +1,127 @@
-import React from "react";
+import React, { useState } from "react";
 import "../css/signupForm.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Form, FloatingLabel } from "react-bootstrap";
 
-class signupForm extends React.Component {
-  constructor(props) {
-    super(props);
+function SignupForm() {
+  //define Hooks
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirm_password, setConfirm_Password] = useState("");
+  const [message, setMessage] = useState("");
 
-    this.state = {
-      username: "",
-      email: "",
-      password: "", //password in plaintext, will be encrypted on server
-      confirm_password: "",
-      pw_message: "",
-    };
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleEmailChange = this.handleEmailChange.bind(this);
-    this.handleUsernameChange = this.handleUsernameChange.bind(this);
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
-    this.handleConfirmPasswordChange =
-      this.handleConfirmPasswordChange.bind(this);
-  }
-
-  //updates local state and appends to formData
-  handleUsernameChange(event) {
-    this.setState({ username: event.target.value });
-  }
-  handleEmailChange(event) {
-    this.setState({ email: event.target.value });
-  }
-  handlePasswordChange(event) {
-    this.setState({ password: event.target.value });
-  }
-  handleConfirmPasswordChange(event) {
-    this.setState({ confirm_password: event.target.value });
-  }
+  //define onChange handlers
+  const onUsernameChange = (event) => {
+    setUsername(event.target.value);
+  };
+  const onEmailChange = (event) => {
+    setEmail(event.target.value);
+  };
+  const onPasswordChange = (event) => {
+    setPassword(event.target.value);
+  };
+  const onConfirm_PasswordChange = (event) => {
+    setConfirm_Password(event.target.value);
+  };
 
   //handles the submitting process
-  async handleSubmit(event) {
-    event.preventDefault();
+  const handleSubmit =
+    (form_username, form_email, form_password) => (event) => {
+      event.preventDefault();
 
-    if (this.state.password === this.state.confirm_password) {
-      let data = {
-        username: this.state.username,
-        email: this.state.email,
-        password: this.state.password,
-      };
+      if (password === confirm_password) {
+        let data = {
+          username: form_username,
+          email: form_email,
+          password: form_password,
+        };
 
-      const response = await fetch("http://localhost:4000/register", {
-        method: "POST",
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-        body: JSON.stringify(data),
-      });
-    } else {
-      this.setState({ pw_message: "Passwords don't match! " });
-    }
-  }
+        const response = fetch("http://localhost:4000/register", {
+          method: "POST",
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+          body: JSON.stringify(data),
+        });
 
-  render() {
-    return (
-      <div className="formContainer">
-        <div className="cardContainer">
-          <Form onSubmit={this.handleSubmit} className="signupForm">
-            <Form.Group>
-              <FloatingLabel className="formLabel" label="Email address">
-                <Form.Control
-                  value={this.state.email}
-                  onChange={this.handleEmailChange}
-                  name="email"
-                  type="email"
-                  placeholder="Email address"
-                  className="formInput"
-                />
-              </FloatingLabel>
-              <Form.Text className="text-muted">
-                Your email will never be shared with anyone.
-              </Form.Text>
-            </Form.Group>
+        //redirect to homepage, token?
+      } else {
+        setMessage("Passwords don't match!");
+      }
+    };
 
-            <Form.Group>
-              <FloatingLabel className="formLabel" label="Username">
-                <Form.Control
-                  value={this.state.username}
-                  onChange={this.handleUsernameChange}
-                  name="username"
-                  type="text"
-                  placeholder="Username"
-                  className="formInput"
-                />
-              </FloatingLabel>
-            </Form.Group>
+  return (
+    <div className="formContainer">
+      <div className="cardContainer">
+        <Form
+          onSubmit={handleSubmit(username, email, password)}
+          className="signupForm"
+        >
+          <Form.Group>
+            <FloatingLabel className="formLabel" label="Email address">
+              <Form.Control
+                value={email}
+                onChange={onEmailChange}
+                name="email"
+                type="email"
+                placeholder="Email address"
+                className="formInput"
+              />
+            </FloatingLabel>
+            <Form.Text className="text-muted">
+              Your email will never be shared with anyone.
+            </Form.Text>
+          </Form.Group>
 
-            <Form.Group>
-              <FloatingLabel className="formLabel" label="Password">
-                <Form.Control
-                  value={this.state.password}
-                  onChange={this.handlePasswordChange}
-                  name="password"
-                  type="password"
-                  placeholder="Password"
-                  className="formInput"
-                />
-              </FloatingLabel>
-            </Form.Group>
+          <Form.Group>
+            <FloatingLabel className="formLabel" label="Username">
+              <Form.Control
+                value={username}
+                onChange={onUsernameChange}
+                name="username"
+                type="text"
+                placeholder="Username"
+                className="formInput"
+              />
+            </FloatingLabel>
+          </Form.Group>
 
-            <Form.Group>
-              <FloatingLabel className="formLabel" label="Confim Password">
-                <Form.Control
-                  value={this.state.confirm_password}
-                  onChange={this.handleConfirmPasswordChange}
-                  type="password"
-                  placeholder="Confirm Password"
-                  className="formInput"
-                />
-              </FloatingLabel>
-              <Form.Text className="text-muted">
-                {this.state.pw_message}
-              </Form.Text>
-            </Form.Group>
+          <Form.Group>
+            <FloatingLabel className="formLabel" label="Password">
+              <Form.Control
+                value={password}
+                onChange={onPasswordChange}
+                name="password"
+                type="password"
+                placeholder="Password"
+                className="formInput"
+              />
+            </FloatingLabel>
+          </Form.Group>
 
-            <Button className="submitBtn" type="submit">
-              Create Account
-            </Button>
-          </Form>
-        </div>
+          <Form.Group>
+            <FloatingLabel className="formLabel" label="Confim Password">
+              <Form.Control
+                value={confirm_password}
+                onChange={onConfirm_PasswordChange}
+                type="password"
+                placeholder="Confirm Password"
+                className="formInput"
+              />
+            </FloatingLabel>
+            <Form.Text className="text-muted">{message}</Form.Text>
+          </Form.Group>
+
+          <Button className="submitBtn" type="submit">
+            Create Account
+          </Button>
+        </Form>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
-export default signupForm;
+export default SignupForm;
