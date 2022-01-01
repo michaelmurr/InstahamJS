@@ -12,10 +12,7 @@ router.get("/:imageID", (req, res) => {
     res.sendFile(path.join(__dirname, "../testPost/", req.params.imageID));
 });
 
-
-
-
-router.get("/", /*verify,*/(req, res) => {
+router.get("/", verify, (req, res) => {
 
     /* ownerID, filename, uploadDate, likes*/
 
