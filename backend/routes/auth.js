@@ -42,7 +42,10 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   const { error } = loginValidation.validate(req.body);
 
-  if (error) return res.status(400).send(error.details[0].message);
+  if (error) {
+    console.log(error.details[0].message);
+    return res.status(400).send(error.details[0].message);
+  }
 
   const user = await User.findOne({ username: req.body.username });
   if (!user) return res.status(400).send("Username or Password is incorrect");
@@ -58,7 +61,8 @@ router.post("/login", async (req, res) => {
 
   //Create and assing a token
   const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
-  res.header("auth-token", token).send(token);
+  console.log("Created Token: ", token);
+  res.header("auth-token", token).status(200);
 });
 
 export default router;
