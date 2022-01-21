@@ -1,41 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import "../css/signupForm.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Form, FloatingLabel } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
-class signupForm extends React.Component {
-  constructor(props) {
-    super(props);
+function LoginForm(props) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
-    this.state = {
-      username: "",
-      password: "", //password in plaintext, will be encrypted on server
-      pw_message: "",
-    };
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleUsernameChange = this.handleUsernameChange.bind(this);
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
+  //updates local state
+  function onUsernameChange(event) {
+    setUsername(event.target.value);
   }
-
-  //updates local state and appends to formData
-  handleUsernameChange(event) {
-    this.setState({ username: event.target.value });
-  }
-  handlePasswordChange(event) {
-    this.setState({ password: event.target.value });
+  function onPasswordChange(event) {
+    setPassword(event.target.value);
   }
 
   //handles the submitting process
-  async handleSubmit(event) {
+  const handleSubmit = (form_username, form_password) => (event) => {
     event.preventDefault();
 
-    let data = {
-      username: this.state.username,
-      password: this.state.password,
+    const data = {
+      username: form_username,
+      password: form_password,
     };
 
-    const response = await fetch("http://localhost:4000/login", {
+   fetch("http://localhost:4000/login", {
       method: "POST",
       mode: "cors",
       headers: {
@@ -43,50 +35,52 @@ class signupForm extends React.Component {
         "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify(data),
-    });
-  }
+    }).then(res => {
+      console.log("Status: ", ares.status);
+      res.state === 200 ? console.log("Success!") : console.log("Pain");
+      
+        navigate("/");
 
-  render() {
-    return (
-      <div className="formContainer">
-        <div className="cardContainer">
-          <Form onSubmit={this.handleSubmit} className="signupForm">
-            <Form.Group>
-              <FloatingLabel className="formLabel" label="Username">
-                <Form.Control
-                  value={this.state.username}
-                  onChange={this.handleUsernameChange}
-                  name="username"
-                  type="text"
-                  placeholder="Username"
-                  className="formInput"
-                />
-              </FloatingLabel>
-            </Form.Group>
+    })
+  };
 
-            <Form.Group>
-              <FloatingLabel className="formLabel" label="Password">
-                <Form.Control
-                  value={this.state.password}
-                  onChange={this.handlePasswordChange}
-                  name="password"
-                  type="password"
-                  placeholder="Password"
-                  className="formInput"
-                />
-              </FloatingLabel>
-            </Form.Group>
-            <Form.Text className="text-muted">
-              {this.state.pw_message}
-            </Form.Text>
-            <Button className="submitBtn" type="submit">
-              Login
-            </Button>
-          </Form>
-        </div>
+  return (
+    <div className="formContainer">
+      <div className="cardContainer">
+        <Form onSubmit={handleSubmit(username, password)} className="signupForm">
+          <Form.Group>
+            <FloatingLabel className="formLabel" label="Username">
+              <Form.Control
+                value={username}
+                onChange={onUsernameChange}
+                name="username"
+                type="text"
+                placeholder="Username"
+                className="formInput"
+              />
+            </FloatingLabel>
+          </Form.Group>
+
+          <Form.Group>
+            <FloatingLabel className="formLabel" label="Password">
+              <Form.Control
+                value={password}
+                onChange={onPasswordChange}
+                name="password"
+                type="password"
+                placeholder="Password"
+                className="formInput"
+              />
+            </FloatingLabel>
+          </Form.Group>
+          <Form.Text className="text-muted">{message}</Form.Text>
+          <Button className="submitBtn" type="submit">
+            Login
+          </Button>
+        </Form>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
-export default signupForm;
+export default LoginForm;
