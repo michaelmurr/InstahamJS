@@ -37,7 +37,7 @@ function SignupForm() {
           password: form_password,
         };
 
-        const response = fetch("http://localhost:4000/register", {
+        const response = fetch(process.env.API + "/register", {
           method: "POST",
           mode: "cors",
           headers: {

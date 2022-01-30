@@ -18,7 +18,7 @@ class App extends React.Component {
   }
 
   async componentDidMount() {
-    const response = await fetch("http://localhost:4000/api/posts");
+    const response = await fetch(process.env.API + "/api/posts");
     const data = await response.json();
     this.setState({ posts: data, loading: false });
   }

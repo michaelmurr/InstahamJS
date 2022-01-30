@@ -27,7 +27,7 @@ function LoginForm(props) {
       password: form_password,
     };
 
-   fetch("http://localhost:4000/login", {
+   fetch(process.env.API + "/login", {
       method: "POST",
       mode: "cors",
       headers: {
