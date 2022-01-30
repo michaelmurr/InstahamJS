@@ -34,7 +34,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-app.use(indexRouter);
+//app.use(indexRouter);
 app.use(authRouter);
 app.use("/api/posts", postRouter);
 
