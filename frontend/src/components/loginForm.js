@@ -36,7 +36,7 @@ function LoginForm(props) {
       },
       body: JSON.stringify(data),
     }).then(res => {
-      console.log("Status: ", ares.status);
+      console.log("Status: ", res.status);
       res.state === 200 ? console.log("Success!") : console.log("Pain");
       
         navigate("/");
