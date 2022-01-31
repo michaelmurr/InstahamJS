@@ -10,15 +10,16 @@ import Posts from "./posts";
 import SignupForm from "../components/signupForm";
 import LoginForm from "../components/loginForm";
 
-class App extends React.Component {
+const API = "instahambackend.herokuapp.com";
 
+class App extends React.Component {
   state = {
     loading: true,
     posts: [],
-  }
+  };
 
   async componentDidMount() {
-    const response = await fetch(process.env.API + "/api/posts");
+    const response = await fetch(API + "/api/posts");
     const data = await response.json();
     this.setState({ posts: data, loading: false });
   }
@@ -29,7 +30,7 @@ class App extends React.Component {
         <Router>
           <Nav />
           <Routes>
-            <Route path="/login" element={<LoginForm/>} />
+            <Route path="/login" element={<LoginForm />} />
             <Route path="/register" element={<SignupForm />} />
             <Route path="/upload" element={<Upload />} />
           </Routes>

@@ -4,6 +4,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Form, FloatingLabel } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
+const API = "instahambackend.herokuapp.com";
+
 function LoginForm(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -27,7 +29,7 @@ function LoginForm(props) {
       password: form_password,
     };
 
-   fetch(process.env.API + "/login", {
+    fetch(API + "/login", {
       method: "POST",
       mode: "cors",
       headers: {
@@ -35,19 +37,21 @@ function LoginForm(props) {
         "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify(data),
-    }).then(res => {
+    }).then((res) => {
       console.log("Status: ", res.status);
       res.state === 200 ? console.log("Success!") : console.log("Pain");
-      
-        navigate("/");
 
-    })
+      navigate("/");
+    });
   };
 
   return (
     <div className="formContainer">
       <div className="cardContainer">
-        <Form onSubmit={handleSubmit(username, password)} className="signupForm">
+        <Form
+          onSubmit={handleSubmit(username, password)}
+          className="signupForm"
+        >
           <Form.Group>
             <FloatingLabel className="formLabel" label="Username">
               <Form.Control

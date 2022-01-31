@@ -3,6 +3,8 @@ import "../css/signupForm.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Form, FloatingLabel } from "react-bootstrap";
 
+const API = "instahambackend.herokuapp.com";
+
 function SignupForm() {
   //define Hooks
   const [username, setUsername] = useState("");
@@ -37,7 +39,7 @@ function SignupForm() {
           password: form_password,
         };
 
-        const response = fetch(process.env.API + "/register", {
+        const response = fetch(API + "/register", {
           method: "POST",
           mode: "cors",
           headers: {
