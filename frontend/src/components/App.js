@@ -10,7 +10,7 @@ import Posts from "./posts";
 import SignupForm from "../components/signupForm";
 import LoginForm from "../components/loginForm";
 
-const API = "instahambackend.herokuapp.com";
+const API = "http://instahambackend.herokuapp.com";
 
 class App extends React.Component {
   state = {
