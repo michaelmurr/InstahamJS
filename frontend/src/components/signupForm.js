@@ -3,7 +3,7 @@ import "../css/signupForm.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Form, FloatingLabel } from "react-bootstrap";
 
-const API = "http://instahambackend.herokuapp.com";
+const API = "https://instahambackend-n95g5.ondigitalocean.app/";
 
 function SignupForm() {
   //define Hooks
