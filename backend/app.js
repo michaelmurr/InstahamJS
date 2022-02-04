@@ -47,17 +47,17 @@ try{
 }
 
 //code for running the server as https
-/*
 https.createServer({
-    key: fs.readFileSync("ssl/server.key"),
-    cert: fs.readFileSync("ssl/server.cert")
+    key: fs.readFileSync("key.pem"),
+    cert: fs.readFileSync("cert.pem")
 }, app)
 .listen(port, () => {
     console.log(`[Server] running on port ${port}`);
-
+    
 });
-*/
 
+/*
 app.listen(port, () => {
     console.log(`[Server] running on port ${port}`);
 })
+*/
