@@ -21,7 +21,7 @@ function LoginForm(props) {
   }
 
   //handles the submitting process
-  const handleSubmit = (form_username, form_password) => (event) => {
+  const handleSubmit = (form_username, form_password) => async (event) => {
     event.preventDefault();
 
     const data = {
@@ -29,7 +29,7 @@ function LoginForm(props) {
       password: form_password,
     };
 
-    fetch(API + "/login", {
+    const response = await fetch(API + "/login", {
       method: "POST",
       mode: "cors",
       headers: {
@@ -37,12 +37,14 @@ function LoginForm(props) {
         "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify(data),
-    }).then((res) => {
-      console.log("Status: ", res.status);
-      res.state === 200 ? console.log("Success!") : console.log("Pain");
-
-      navigate("/");
     });
+    if (response.status === 200) {
+      setMessage("Success!");
+      setTimeout(3000);
+      navigate("/");
+    } else {
+      return setMessage(response.statusText);
+    }
   };
 
   return (
