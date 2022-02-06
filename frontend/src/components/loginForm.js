@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Form, FloatingLabel } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-const API = "//instahambackend.herokuapp.com";
+const API = "http://localhost:4000";
 
 function LoginForm(props) {
   const [username, setUsername] = useState("");

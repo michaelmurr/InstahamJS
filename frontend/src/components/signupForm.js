@@ -3,7 +3,7 @@ import "../css/signupForm.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Form, FloatingLabel } from "react-bootstrap";
 
-const API = "//instahambackend.herokuapp.com";
+const API = "http://localhost:4000";
 
 function SignupForm() {
   //define Hooks
@@ -48,7 +48,7 @@ function SignupForm() {
           },
           body: JSON.stringify(data),
         });
-
+        setMessage(response, JSON.stringify(data));
         //redirect to homepage, token?
       } else {
         setMessage("Passwords don't match!");
