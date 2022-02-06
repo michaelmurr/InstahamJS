@@ -3,11 +3,12 @@
 Things to implement:
 
 Create Account
-    -email verification?
-    -Regex?
+    -email verification
 
-Login w/Token
-    -> when logged in:
-        *post
-        *comment
-        *show 5 most recent post from following
+Server Performance
+    -cluster module
+    -compress response
+    -image compression
+
+-Input Validation against injection attacks
+-other security stuff
