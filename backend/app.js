@@ -46,6 +46,7 @@ try{
     console.log(err);
 }
 
+/*
 //code for running the server as https
 https.createServer({
     key: fs.readFileSync("key.pem"),
@@ -54,9 +55,8 @@ https.createServer({
 .listen(port, () => {
     console.log(`[Server] running on port ${port}`);
 });
+*/
 
-/*
 app.listen(port, () => {
     console.log(`[Server] running on port ${port}`);
-})
-*/
+});
