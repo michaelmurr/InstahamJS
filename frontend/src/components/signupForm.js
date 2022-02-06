@@ -51,6 +51,8 @@ function SignupForm() {
           body: JSON.stringify(data),
         });
         if (response.status === 200) {
+          setMessage("Success!");
+          setTimeout(3000);
           navigate("/");
         } else {
           return setMessage(response.statusText);
