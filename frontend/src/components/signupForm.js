@@ -1,6 +1,7 @@
-import React, { useState } from "react";
 import "../css/signupForm.css";
+import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useNavigate } from "react-router-dom";
 import { Button, Form, FloatingLabel } from "react-bootstrap";
 
 const API = "http://localhost:4000";
@@ -12,6 +13,7 @@ function SignupForm() {
   const [password, setPassword] = useState("");
   const [confirm_password, setConfirm_Password] = useState("");
   const [message, setMessage] = useState("");
+  const navigate = useNavigate("/");
 
   //define onChange handlers
   const onUsernameChange = (event) => {
@@ -29,7 +31,7 @@ function SignupForm() {
 
   //handles the submitting process
   const handleSubmit =
-    (form_username, form_email, form_password) => (event) => {
+    (form_username, form_email, form_password) => async (event) => {
       event.preventDefault();
 
       if (password === confirm_password) {
@@ -39,7 +41,7 @@ function SignupForm() {
           password: form_password,
         };
 
-        const response = fetch(API + "/register", {
+        const response = await fetch(API + "/register", {
           method: "POST",
           mode: "cors",
           headers: {
@@ -48,7 +50,11 @@ function SignupForm() {
           },
           body: JSON.stringify(data),
         });
-        setMessage(response, JSON.stringify(data));
+        if (response.status === 200) {
+          navigate("/");
+        } else {
+          return setMessage(response.statusText);
+        }
         //redirect to homepage, token?
       } else {
         setMessage("Passwords don't match!");
