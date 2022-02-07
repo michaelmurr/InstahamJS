@@ -1,11 +1,11 @@
-import mongoose, { Model, Schema } from "mongoose";
+import mongoose from "mongoose";
 
 const postSchema = mongoose.Schema({
     ownerID:{
         type: String,
         required: true,
     },
-    filename:{
+    content:{
         type: String,
         required: true
     },
@@ -14,8 +14,9 @@ const postSchema = mongoose.Schema({
         default: 0,
     },
     uploadDate:{
-        default: Date.now(),
+        type: Date,
+        default: Date.now,
     }
 });
 
-export default mongoose.model("Posts", postSchema)
+export default mongoose.model("Post", postSchema)
