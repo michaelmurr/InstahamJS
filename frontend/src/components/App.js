@@ -30,12 +30,12 @@ class App extends React.Component {
         <Router>
           <Nav />
           <Routes>
+            <Route path="/" element={<Posts posts={this.state.posts} />} />
             <Route path="/login" element={<LoginForm />} />
             <Route path="/register" element={<SignupForm />} />
             <Route path="/upload" element={<Upload />} />
           </Routes>
         </Router>
-        <Posts posts={this.state.posts} />
       </div>
     );
   }
