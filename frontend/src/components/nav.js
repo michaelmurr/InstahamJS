@@ -11,7 +11,7 @@ function Nav() {
             <nav className="navbar">
                 <ul className="navList">
                     <li>
-                        <Link to="/upload">Create a new Post</Link>
+                        <Link to="/api/upload">Create a new Post</Link>
                     </li>
                 </ul>
             </nav>
