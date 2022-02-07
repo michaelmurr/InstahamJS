@@ -1,7 +1,7 @@
 import "../css/app.css";
 import "../css/posts.css";
 import React from "react";
-import Upload from "./upload";
+import Upload from "./uploadForm";
 import Nav from "../components/nav";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -33,7 +33,7 @@ class App extends React.Component {
             <Route path="/" element={<Posts posts={this.state.posts} />} />
             <Route path="/login" element={<LoginForm />} />
             <Route path="/register" element={<SignupForm />} />
-            <Route path="/upload" element={<Upload />} />
+            <Route path="/api/upload" element={<Upload />} />
           </Routes>
         </Router>
       </div>
