@@ -10,7 +10,7 @@ function LoginForm(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-  const navigate = useNavigate();
+  const navigate = useNavigate("/");
 
   //updates local state
   function onUsernameChange(event) {
