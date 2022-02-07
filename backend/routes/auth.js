@@ -53,14 +53,14 @@ router.post("/register", async (req, res) => {
 
 //Log into existing user
 router.post("/login", async (req, res) => {
-  const { error } = loginValidation.validate(req.body);
-
+  /*
+ const { error } = loginValidation.validate(req.body);
   if (error) {
     console.log(error.details[0].message);
     res.statusMessage = error.details[0].message;
     return res.status(400).end();
   }
-
+*/
   //check if username exists in DB
   const user = await User.findOne({ username: req.body.username });
   if (!user) {
@@ -83,7 +83,7 @@ router.post("/login", async (req, res) => {
   //Create and assing a token
   const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
   console.log("Created Token: ", token);
-  res.header("auth-token", token).status(200);
+  res.header("auth-token", token).status(200).end();
 });
 
 export default router;
