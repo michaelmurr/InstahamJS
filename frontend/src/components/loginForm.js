@@ -3,14 +3,26 @@ import "../css/signupForm.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Form, FloatingLabel } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const API = "//instahambackend.herokuapp.com";
 
-function LoginForm(props) {
+async function loginUser(credentials){
+  return fetch(API + "/login", {
+    method: "POST",
+    headers:{
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(credentials)
+  })
+  .then(data => data.json());
+}
+
+export default function LoginForm({setToken}) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-  const navigate = useNavigate("/");
+  //const navigate = useNavigate("/");
 
   //updates local state
   function onUsernameChange(event) {
@@ -21,31 +33,13 @@ function LoginForm(props) {
   }
 
   //handles the submitting process
-  const handleSubmit = (form_username, form_password) => async (event) => {
+  const handleSubmit = () => async (event) => {
     event.preventDefault();
-
-    const data = {
-      username: form_username,
-      password: form_password,
-    };
-
-    const response = await fetch(API + "/login", {
-      method: "POST",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify(data),
-    });
-    if (response.status === 200) {
-      setMessage("Success!");
-      setTimeout(3000);
-      navigate("/");
-    } else {
-      return setMessage(response.statusText);
+    const token = await loginUser({username, password});
+    setToken(token);
+    setMessage("Success!");
+    //navigate("/");
     }
-  };
 
   return (
     <div className="formContainer">
@@ -89,4 +83,6 @@ function LoginForm(props) {
   );
 }
 
-export default LoginForm;
+LoginForm.propTypes={
+  setToken: PropTypes.func.isRequired
+}
