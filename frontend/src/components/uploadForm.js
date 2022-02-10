@@ -5,7 +5,7 @@ import { useState } from "react";
 import useToken from "./useToken";
 import LoginForm from "./loginForm";
 
-const API = "http://localhost:4000";
+const API = "//instahambackend.herokuapp.com";
 
 async function uploadPost(form_data, auth_token) {
   return fetch(API + "/api/upload", {

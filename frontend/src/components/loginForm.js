@@ -5,14 +5,14 @@ import { Button, Form, FloatingLabel } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 
-const API = "//localhost:4000";
+const API = "//instahambackend.herokuapp.com";
 
 async function loginUser(credentials){
   return fetch(API + "/login", {
     method: "POST",
     headers:{
       "Content-Type": "application/json",
-      
+    
     },
     body: JSON.stringify(credentials)
   })
