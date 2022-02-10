@@ -1,43 +1,50 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Form, FloatingLabel } from "react-bootstrap";
 import { useState } from "react";
+import useToken from "./useToken";
+import LoginForm from "./loginForm";
 
 const API = "http://localhost:4000";
 
-function Upload() {
-    const [text, setText] = useState("");
+async function uploadPost(form_data) {
+  return fetch(API + "/api/upload", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ contentString: form_data }),
+  });
+}
 
-    //update local state 
-    function onTextChange(event){
-        setText(event.target.value);
-    }
+export default function Upload() {
+  const [text, setText] = useState("");
+  const { token, setToken } = useToken();
 
-    const handleSubmit = (form_text) => async (event) => {
-        event.preventDefault();
+  if (!token) return <LoginForm setToken={setToken} />;
 
-        const data = {
-          contentString: form_text,
-        }
+  //update local state
+  function onTextChange(event) {
+    setText(event.target.value);
+  }
 
-        const response = await fetch(API + "/api/upload", {
-          method: "POST",
-          mode: "cors",
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-          },
-          body: JSON.stringify(data),
-        });
-    }
+  const handleSubmit = () => async (event) => {
+    event.preventDefault();
+    const response = await uploadPost();
+  };
 
   return (
     <div className="uploadForm">
-      <Form
-      onSubmit={handleSubmit(text)}>
+      <Form onSubmit={handleSubmit()}>
         <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
           <Form.Label></Form.Label>
-          <Form.Control as="textarea" rows={3} value={text} placeholder="Share something" onChange={onTextChange}/>
+          <Form.Control
+            as="textarea"
+            rows={3}
+            value={text}
+            placeholder="Share something"
+            onChange={onTextChange}
+          />
         </Form.Group>
         <Button className="submitBtn" type="submit">
           Post
@@ -46,5 +53,3 @@ function Upload() {
     </div>
   );
 }
-
-export default Upload;

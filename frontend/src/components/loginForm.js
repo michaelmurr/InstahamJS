@@ -5,13 +5,14 @@ import { Button, Form, FloatingLabel } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 
-const API = "//instahambackend.herokuapp.com";
+const API = "//localhost:4000";
 
 async function loginUser(credentials){
   return fetch(API + "/login", {
     method: "POST",
     headers:{
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      
     },
     body: JSON.stringify(credentials)
   })
@@ -22,7 +23,6 @@ export default function LoginForm({setToken}) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-  //const navigate = useNavigate("/");
 
   //updates local state
   function onUsernameChange(event) {
@@ -38,7 +38,6 @@ export default function LoginForm({setToken}) {
     const token = await loginUser({username, password});
     setToken(token);
     setMessage("Success!");
-    //navigate("/");
     }
 
   return (
