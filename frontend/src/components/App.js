@@ -11,28 +11,54 @@ import useToken from "./useToken";
 import SignupForm from "./signupForm";
 import LoginForm from "./loginForm";
 
-const API = "//instahambackend.herokuapp.com";
+const API = "http://localhost:4000";
 
 export default function App() {
-  const [posts, setPosts] = useState();
-  const {token, setToken} = useToken();
-  
-  useEffect(() => {
-    async function fetchData(){
-      const response = await fetch(API + "/api/posts");
+  const [loading, setLoading] = useState(true);
+  const [posts, setPosts] = useState([]);
+  const { token, setToken } = useToken();
+
+  async function fetchData() {}
+
+  useEffect(async () => {
+    if (loading === true) {
+      const response = await fetch(API + "/api/posts", { mode: "cors" });
       const data = await response.json();
-      setPosts(data);
+      setLoading(false);
+      setPosts(data.posts);
     }
-    fetchData();
-  });
-  
+  }, []);
+
   return (
     <div className="App">
       <Router>
         <Nav />
+
         <Routes>
-          <Route path="/" exact element={<h1>Renders on "/"</h1>} />
-          <Route path="/login" exact element={<LoginForm setToken={setToken}/>} />
+          <Route
+            path="/"
+            exact
+            element={
+              <div className="fetchedPosts">
+                {posts.map((post) => (
+                  <div
+                    key={post.ownerID}
+                    id={post.ownerID}
+                    className="postContainer"
+                  >
+                    <div>{post.content}</div>
+                    <div>{post.uploadDate}</div>
+                    <div>Likes: {post.likes}</div>
+                  </div>
+                ))}
+              </div>
+            }
+          />
+          <Route
+            path="/login"
+            exact
+            element={<LoginForm setToken={setToken} />}
+          />
           <Route path="/register" exact element={<SignupForm />} />
           <Route path="/api/upload" exact element={<Upload />} />
         </Routes>
