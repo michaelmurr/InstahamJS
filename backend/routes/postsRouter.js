@@ -23,4 +23,10 @@ router.post("/upload", verify, async (req, res) => {
   res.status(200).send("Created new post!");
 });
 
+router.get("/posts", async (req, res) => {
+  const posts = await Post.find({}).sort({uploadDate: -1}).limit(20);
+  
+  res.send({posts});
+});
+
 export default router;
