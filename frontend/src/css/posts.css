@@ -1,3 +1,15 @@
 .fetchedPosts{
-    background-color: #34333b;
+    background-color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.postContainer{
+    border: 1px solid #ddd;
+    border-radius: .5rem;
+    width: 20%;
+    padding: 1.2rem;
+    margin: .5rem;
 }
