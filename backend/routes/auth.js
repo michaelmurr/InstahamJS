@@ -6,36 +6,25 @@ import { registerValidation } from "../validation.js";
 import { loginValidation } from "../validation.js";
 
 const router = express.Router();
-const saltRounds = 10;
+const saltRounds = 12; //raising this number is a bad idea
 
 //Creating a new user
 router.post("/register", async (req, res) => {
   const { error } = registerValidation.validate(req.body);
-  if (error) {
-    console.log(error.details[0].message);
-    res.statusMessage = error.details[0].message;
-    return res.status(400).end();
-  }
+  if (error) res.status(400).send(error);
 
   //check if email already exists
   const emailExists = await User.findOne({ email: req.body.email });
-  if (emailExists != null) {
-    res.statusMessage = "Email already exists!";
-    return res.status(400).end();
-  }
+  if (emailExists) res.status(400).send("Email already exists!");
 
   //check if username already exists
   const usernameExists = await User.findOne({ username: req.body.username });
-  if (usernameExists != null) {
-    res.statusMessage = "Username already exists!";
-    return res.status(400).end();
-  }
+  if (usernameExists) res.status(400).send("Username already exists!");
 
+  //Encrypt the password before saving it in the db
   bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
-    if (err) {
-      console.log(err);
-      res.json(err);
-    }
+    if (err) res.send(err);
+
     try {
       const user = new User({
         username: req.body.username,
@@ -43,10 +32,9 @@ router.post("/register", async (req, res) => {
         hashed_password: hash,
       });
       user.save();
-      res.send({ User: user.id });
+      res.status(200).send("Success!");
     } catch (err) {
-      res.send({ message: err });
-      console.log(err);
+      res.send(err);
     }
   });
 });
@@ -63,27 +51,18 @@ router.post("/login", async (req, res) => {
 */
   //check if username exists in DB
   const user = await User.findOne({ username: req.body.username });
-  if (!user) {
-    res.statusMessage = "Username or Password is incorrect";
-    return res.status(400).end();
-  }
+  if (!user) return res.status(400).send("Username or Password is incorrect");
 
   //compare passwords
   const validPass = await bcrypt.compare(
     req.body.password,
     user.hashed_password
   );
-
-  //passwords dont match? => return error
-  if (!validPass) {
-    res.statusMessage = "Username or Password is incorrect";
-    return res.status(400).end();
-  }
+  if (!validPass) res.status(400).send("Username or Password is incorrect");
 
   //Create and assing a token
   const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
-  console.log("Created Token: ", token);
-  res.send({token: token});
+  res.send({ token: token });
 });
 
 export default router;

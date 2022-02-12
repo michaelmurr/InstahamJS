@@ -6,7 +6,17 @@ import { Button, Form, FloatingLabel } from "react-bootstrap";
 
 const API = "//instahambackend.herokuapp.com";
 
-function SignupForm() {
+async function signupUser(credentials) {
+  return fetch(API + "/register", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(credentials),
+  }).then((data) => data.json());
+}
+
+export default function SignupForm() {
   //define Hooks
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -30,38 +40,24 @@ function SignupForm() {
   };
 
   //handles the submitting process
-  const handleSubmit =
-    (form_username, form_email, form_password) => async (event) => {
-      event.preventDefault();
+  const handleSubmit = () => async (event) => {
+    event.preventDefault();
 
-      if (password === confirm_password) {
-        let data = {
-          username: form_username,
-          email: form_email,
-          password: form_password,
-        };
+    if (password === confirm_password) {
 
-        const response = await fetch(API + "/register", {
-          method: "POST",
-          mode: "cors",
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-          },
-          body: JSON.stringify(data),
-        });
-        if (response.status === 200) {
-          setMessage("Success!");
-          setTimeout(3000);
-          navigate("/");
-        } else {
-          return setMessage(response.statusText);
-        }
-        //redirect to homepage, token?
+      const response = await signupUser({ username, email, password });
+      console.log(response);
+      if (response.status === 200) {
+        setMessage("Success!");
+        navigate("/login");
       } else {
-        setMessage("Passwords don't match!");
+        return setMessage(response.statusText);
       }
-    };
+      //redirect to homepage, token?
+    } else {
+      setMessage("Passwords don't match!");
+    }
+  };
 
   return (
     <div className="formContainer">
@@ -133,5 +129,3 @@ function SignupForm() {
     </div>
   );
 }
-
-export default SignupForm;
