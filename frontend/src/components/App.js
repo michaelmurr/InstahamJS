@@ -12,7 +12,7 @@ import DayJS from "react-dayjs";
 import SignupForm from "./signupForm";
 import LoginForm from "./loginForm";
 
-const API = "http://localhost:4000";
+const API = "//instahambackend.herokuapp.com";
 
 export default function App() {
   const [loading, setLoading] = useState(true);
