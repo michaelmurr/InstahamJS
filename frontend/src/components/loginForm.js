@@ -10,6 +10,7 @@ const API = "//instahambackend.herokuapp.com";
 async function loginUser(credentials){
   return fetch(API + "/login", {
     method: "POST",
+    mode: "cors",
     headers:{
       "Content-Type": "application/json",
       "Access-Control-ALlow-Origin": "*"
