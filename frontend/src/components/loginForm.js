@@ -12,7 +12,7 @@ async function loginUser(credentials){
     method: "POST",
     headers:{
       "Content-Type": "application/json",
-    
+      "Access-Control-ALlow-Origin": "*"
     },
     body: JSON.stringify(credentials)
   })
