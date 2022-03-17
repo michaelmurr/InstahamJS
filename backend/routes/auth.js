@@ -6,20 +6,20 @@ import { registerValidation } from "../validation.js";
 import { loginValidation } from "../validation.js";
 
 const router = express.Router();
-const saltRounds = 12; //raising this number is a bad idea
+const saltRounds = 12; //raising this number bricks the app
 
 //Creating a new user
 router.post("/register", async (req, res) => {
   const { error } = registerValidation.validate(req.body);
-  if (error) res.status(400).send(error);
+  if (error) return res.status(400).send(error);
 
   //check if email already exists
   const emailExists = await User.findOne({ email: req.body.email });
-  if (emailExists) res.status(400).send("Email already exists!");
+  if (emailExists) return res.status(400).send("Email already exists!");
 
   //check if username already exists
   const usernameExists = await User.findOne({ username: req.body.username });
-  if (usernameExists) res.status(400).send("Username already exists!");
+  if (usernameExists) return res.status(400).send("Username already exists!");
 
   //Encrypt the password before saving it in the db
   bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
@@ -32,7 +32,7 @@ router.post("/register", async (req, res) => {
         hashed_password: hash,
       });
       user.save();
-      res.status(200).send("Success!");
+      return res.status(200).send("Success!");
     } catch (err) {
       res.send(err);
     }
@@ -58,7 +58,7 @@ router.post("/login", async (req, res) => {
     req.body.password,
     user.hashed_password
   );
-  if (!validPass) res.status(400).send("Username or Password is incorrect");
+  if (!validPass) return res.status(400).send("Username or Password is incorrect");
 
   //Create and assing a token
   const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
