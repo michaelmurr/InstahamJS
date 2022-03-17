@@ -32,7 +32,7 @@ router.post("/register", async (req, res) => {
         hashed_password: hash,
       });
       user.save();
-      return res.status(200).send("Success!");
+      return res.status(200).send({message: "Success!"});
     } catch (err) {
       return res.send(err);
     }
@@ -41,6 +41,8 @@ router.post("/register", async (req, res) => {
 
 //Log into existing user
 router.post("/login", async (req, res) => {
+
+  //validating login is not a good idea, ill just leave the code in tho
   /*
  const { error } = loginValidation.validate(req.body);
   if (error) {
@@ -51,14 +53,14 @@ router.post("/login", async (req, res) => {
 */
   //check if username exists in DB
   const user = await User.findOne({ username: req.body.username });
-  if (!user) return res.status(400).send("Username or Password is incorrect");
+  if (!user) return res.status(400).send({message: "Username or Password is incorrect"});
 
   //compare passwords
   const validPass = await bcrypt.compare(
     req.body.password,
     user.hashed_password
   );
-  if (!validPass) return res.status(400).send("Username or Password is incorrect");
+  if (!validPass) return res.status(400).send({message: "Username or Password is incorrect"});
 
   //Create and assing a token
   const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
