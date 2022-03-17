@@ -11,19 +11,19 @@ const saltRounds = 12; //raising this number bricks the app
 //Creating a new user
 router.post("/register", async (req, res) => {
   const { error } = registerValidation.validate(req.body);
-  if (error) return res.status(400).send(error);
+  if (error) return res.status(400).send({message: error});
 
   //check if email already exists
   const emailExists = await User.findOne({ email: req.body.email });
-  if (emailExists) return res.status(400).send("Email already exists!");
+  if (emailExists) return res.status(400).send({message: "Email already exists!"});
 
   //check if username already exists
   const usernameExists = await User.findOne({ username: req.body.username });
-  if (usernameExists) return res.status(400).send("Username already exists!");
+  if (usernameExists) return res.status(400).send({message: "Username already exists!"});
 
   //Encrypt the password before saving it in the db
   bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
-    if (err) res.send(err);
+    if (err) return res.send(err);
 
     try {
       const user = new User({
@@ -34,7 +34,7 @@ router.post("/register", async (req, res) => {
       user.save();
       return res.status(200).send("Success!");
     } catch (err) {
-      res.send(err);
+      return res.send(err);
     }
   });
 });
