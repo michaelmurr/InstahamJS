@@ -47,6 +47,9 @@ export default function LoginForm({ setToken }) {
       setMessage("Success!");
       navigate("/");
     }
+    catch(e){
+      console.log(e);
+    }
   };
 
   return (
