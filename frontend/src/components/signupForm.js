@@ -4,16 +4,20 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
 import { Button, Form, FloatingLabel } from "react-bootstrap";
 
+//const API = "http://localhost:4000";
 const API = "//instahambackend.herokuapp.com";
 
 async function signupUser(credentials) {
-  return fetch(API + "/register", {
+  return await fetch(API + "/register", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Accept: "application/json",
     },
     body: JSON.stringify(credentials),
-  }).then((data) => data.json());
+  })
+    //.then((data) => data.json())
+    .catch((err) => console.log(err));
 }
 
 export default function SignupForm() {
@@ -43,20 +47,24 @@ export default function SignupForm() {
   const handleSubmit = () => async (event) => {
     event.preventDefault();
 
-    if (password === confirm_password) {
+    if (password !== confirm_password)
+      return setMessage("Passwords don't match!");
 
-      const response = await signupUser({ username, email, password });
-      console.log(response);
-      if (response.status === 200) {
-        setMessage("Success!");
-        navigate("/login");
-      } else {
-        return setMessage(response.statusText);
+      try{
+        setMessage("");
+        const res = await signupUser({ username, email, password });
+        const msg = await res.json();
+
+        console.log(msg.message);
+        setMessage(msg.message);
+        if(res.status === 200) return navigate("/login");
       }
-      //redirect to homepage, token?
-    } else {
-      setMessage("Passwords don't match!");
-    }
+      catch(e){
+        console.log("ERROR: ", e);
+
+      }
+      
+    //redirect to homepage, token?
   };
 
   return (
@@ -118,7 +126,7 @@ export default function SignupForm() {
                 className="formInput"
               />
             </FloatingLabel>
-            <Form.Text className="text-muted">{message}</Form.Text>
+            <Form.Text className="text-muted">Message: {message}</Form.Text>
           </Form.Group>
 
           <Button className="submitBtn" type="submit">
