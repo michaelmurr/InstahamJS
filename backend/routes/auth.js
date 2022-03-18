@@ -11,15 +11,17 @@ const saltRounds = 12; //raising this number bricks the app
 //Creating a new user
 router.post("/register", async (req, res) => {
   const { error } = registerValidation.validate(req.body);
-  if (error) return res.status(400).send({message: error});
+  if (error) return res.status(400).send({ message: error });
 
   //check if email already exists
   const emailExists = await User.findOne({ email: req.body.email });
-  if (emailExists) return res.status(400).send({message: "Email already exists!"});
+  if (emailExists)
+    return res.status(400).send({ message: "Email already exists!" });
 
   //check if username already exists
   const usernameExists = await User.findOne({ username: req.body.username });
-  if (usernameExists) return res.status(400).send({message: "Username already exists!"});
+  if (usernameExists)
+    return res.status(400).send({ message: "Username already exists!" });
 
   //Encrypt the password before saving it in the db
   bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
@@ -31,8 +33,9 @@ router.post("/register", async (req, res) => {
         email: req.body.email,
         hashed_password: hash,
       });
+
       user.save();
-      return res.status(200).send({message: "Success!"});
+      return res.status(200).send({ message: "Success!" });
     } catch (err) {
       return res.send(err);
     }
@@ -41,7 +44,6 @@ router.post("/register", async (req, res) => {
 
 //Log into existing user
 router.post("/login", async (req, res) => {
-
   //validating login is not a good idea, ill just leave the code in tho
   /*
  const { error } = loginValidation.validate(req.body);
@@ -53,14 +55,20 @@ router.post("/login", async (req, res) => {
 */
   //check if username exists in DB
   const user = await User.findOne({ username: req.body.username });
-  if (!user) return res.status(400).send({message: "Username or Password is incorrect"});
+  if (!user)
+    return res
+      .status(400)
+      .send({ message: "Username or Password is incorrect" });
 
   //compare passwords
   const validPass = await bcrypt.compare(
     req.body.password,
     user.hashed_password
   );
-  if (!validPass) return res.status(400).send({message: "Username or Password is incorrect"});
+  if (!validPass)
+    return res
+      .status(400)
+      .send({ message: "Username or Password is incorrect" });
 
   //Create and assing a token
   const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
