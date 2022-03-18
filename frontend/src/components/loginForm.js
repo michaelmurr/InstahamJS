@@ -7,19 +7,18 @@ import "../css/signupForm.css";
 
 const API = "//instahambackend.herokuapp.com";
 
-async function loginUser(credentials){
-  return fetch(API + "/login", {
+async function loginUser(credentials) {
+  return await fetch(API + "/login", {
     method: "POST",
     mode: "cors",
-    headers:{
+    headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(credentials)
-  })
-  .then(data => data.json());
+    body: JSON.stringify(credentials),
+  }).catch((err) => console.log(err));
 }
 
-export default function LoginForm({setToken}) {
+export default function LoginForm({ setToken }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -36,11 +35,19 @@ export default function LoginForm({setToken}) {
   //handles the submitting process
   const handleSubmit = () => async (event) => {
     event.preventDefault();
-    const token = await loginUser({username, password});
-    setToken(token);
-    setMessage("Success!");
-    navigate("/");
+    try{
+      const res = await loginUser({ username, password });
+      const token = await res.json();
+
+      //exit if something failed
+      if(res.status !== 200) return setMessage(token.message);
+
+      //set token and redirect on success
+      setToken(token);
+      setMessage("Success!");
+      navigate("/");
     }
+  };
 
   return (
     <div className="formContainer">
@@ -84,6 +91,6 @@ export default function LoginForm({setToken}) {
   );
 }
 
-LoginForm.propTypes={
-  setToken: PropTypes.func.isRequired
-}
+LoginForm.propTypes = {
+  setToken: PropTypes.func.isRequired,
+};
