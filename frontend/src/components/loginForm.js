@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import "../css/signupForm.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Form, FloatingLabel } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
+import "../css/signupForm.css";
 
 const API = "//instahambackend.herokuapp.com";
 
@@ -13,7 +13,6 @@ async function loginUser(credentials){
     mode: "cors",
     headers:{
       "Content-Type": "application/json",
-      "Access-Control-ALlow-Origin": "*"
     },
     body: JSON.stringify(credentials)
   })
@@ -24,6 +23,7 @@ export default function LoginForm({setToken}) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const navigate = useNavigate("");
 
   //updates local state
   function onUsernameChange(event) {
@@ -39,6 +39,7 @@ export default function LoginForm({setToken}) {
     const token = await loginUser({username, password});
     setToken(token);
     setMessage("Success!");
+    navigate("/");
     }
 
   return (
