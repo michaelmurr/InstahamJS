@@ -55,7 +55,6 @@ export default function SignupForm() {
         const res = await signupUser({ username, email, password });
         const msg = await res.json();
 
-        console.log(msg.message);
         setMessage(msg.message);
         if(res.status === 200) return navigate("/login");
       }
