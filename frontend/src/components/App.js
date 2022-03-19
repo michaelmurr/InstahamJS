@@ -8,6 +8,7 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import useToken from "./useToken";
 import DayJS from "react-dayjs";
+import heart_icon from "../heart_icon.png";
 
 import SignupForm from "./signupForm";
 import LoginForm from "./loginForm";
@@ -17,7 +18,7 @@ const API = "//instahambackend.herokuapp.com";
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
-  const [date, setDate] = useState("");
+  //const [date, setDate] = useState("");
   const { token, setToken } = useToken();
 
   async function fetchData() {}
@@ -29,7 +30,7 @@ export default function App() {
         const data = await response.json();
         setLoading(false);
         setPosts(data.posts);
-        setDate();
+       // setDate();
       }
     }
     fetchData();
@@ -38,7 +39,9 @@ export default function App() {
   return (
     <div className="App">
       <Router>
+        <header>
         <Nav />
+        </header>
         <Routes>
           <Route
             path="/"
@@ -51,14 +54,14 @@ export default function App() {
                     id={post.ownerID}
                     className="postContainer"
                   >
-                    <div>{post.username}</div>
-                    <div>{post.content}</div>
-                    <div>
+                    <h1 className="username">{post.username}</h1>
+                    <div className="postDate">
                       <DayJS format="DD. MMMM YYYY, H:mm">
                         {post.uploadDate}
                       </DayJS>
                     </div>
-                    <div>Likes: {post.likes}</div>
+                    <p>{post.content}</p>
+                    <div><img src={heart_icon} alt=""/> {post.likes}</div>
                   </div>
                 ))}
               </div>

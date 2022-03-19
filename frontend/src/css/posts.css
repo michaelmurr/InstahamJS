@@ -1,15 +1,17 @@
 .fetchedPosts{
-    background-color: #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+    margin: 0 auto;
+    margin-top: 5%;
 }
 
 .postContainer{
-    border: 1px solid #ddd;
-    border-radius: .5rem;
-    width: 20%;
-    padding: 1.2rem;
-    margin: .5rem;
+    font-size: 1.2rem;
+    border-bottom: 2px solid grey;
+    padding: 5%;
+}
+
+.username{
+    border-bottom: 2px solid black;
+}
+.postDate{
+    color: #666;
 }

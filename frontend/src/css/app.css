@@ -1,6 +1,16 @@
-.App{
-    color: #ddd;
-}
 html{
-    background-color: #000000;
+    margin: 0;
+    padding: 0;
 }
+/*
+header{
+    padding: 1rem 5%;
+    height: 4rem;
+    position: fixed;
+    background-color: #CCC;
+    bottom: 0;
+    z-index: 99;
+    border-bottom: 2px solid #121212;
+    width: 100%;
+}
+*/
