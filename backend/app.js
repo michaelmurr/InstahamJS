@@ -12,6 +12,7 @@ import bodyParser from "body-parser";
 import indexRouter from "./routes/indexRouter.js";
 import authRouter from "./routes/auth.js";
 import postRouter from "./routes/postsRouter.js";
+import userRouter from "./routes/userRouter.js";
 
 const port = process.env.PORT || 4000;
 const __filename = fileURLToPath(import.meta.url);
@@ -33,6 +34,7 @@ app.use(bodyParser.json());
 
 app.use(authRouter);
 app.use("/api", postRouter);
+app.use("/api", userRouter);
 
 //connect to db
 mongoose
