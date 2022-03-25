@@ -1,17 +1,16 @@
+import Nav from "./nav";
 import "../css/app.css";
 import "../css/posts.css";
 import Posts from "./posts";
+import Profile from "./profile";
 import Upload from "./uploadForm";
-import Nav from "./nav";
+import useToken from "./useToken";
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import useToken from "./useToken";
-import DayJS from "react-dayjs";
-import heart_icon from "../heart_icon.png";
 
-import SignupForm from "./signupForm";
 import LoginForm from "./loginForm";
+import SignupForm from "./signupForm";
 
 const API = "//instahambackend.herokuapp.com";
 
@@ -30,7 +29,7 @@ export default function App() {
         const data = await response.json();
         setLoading(false);
         setPosts(data.posts);
-       // setDate();
+        // setDate();
       }
     }
     fetchData();
@@ -39,34 +38,9 @@ export default function App() {
   return (
     <div className="App">
       <Router>
-        <header>
         <Nav />
-        </header>
         <Routes>
-          <Route
-            path="/"
-            exact
-            element={
-              <div className="fetchedPosts">
-                {posts.map((post) => (
-                  <div
-                    key={post.ownerID}
-                    id={post.ownerID}
-                    className="postContainer"
-                  >
-                    <h1 className="username">{post.username}</h1>
-                    <div className="postDate">
-                      <DayJS format="DD. MMMM YYYY, H:mm">
-                        {post.uploadDate}
-                      </DayJS>
-                    </div>
-                    <p>{post.content}</p>
-                    <div><img src={heart_icon} alt=""/> {post.likes}</div>
-                  </div>
-                ))}
-              </div>
-            }
-          />
+          <Route path="/" exact element={<Posts posts={posts} />} />
           <Route
             path="/login"
             exact
@@ -74,6 +48,7 @@ export default function App() {
           />
           <Route path="/register" exact element={<SignupForm />} />
           <Route path="/api/upload" exact element={<Upload />} />
+          <Route path="/profile" exact element={<Profile />} />
         </Routes>
       </Router>
     </div>
