@@ -10,7 +10,7 @@
 }
 
 .username{
-    border-bottom: 2px solid black;
+    text-decoration: underline 3px solid black;
 }
 .postDate{
     color: #666;
