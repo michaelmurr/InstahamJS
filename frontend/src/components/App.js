@@ -17,10 +17,8 @@ const API = "//instahambackend.herokuapp.com";
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
-  //const [date, setDate] = useState("");
   const { token, setToken } = useToken();
 
-  async function fetchData() {}
 
   useEffect(() => {
     async function fetchData() {
