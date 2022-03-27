@@ -4,8 +4,8 @@ import LoginForm from "./loginForm";
 import Posts from "./posts";
 import DayJS from "react-dayjs";
 
-//const API = "//instahambackend.netlify.app";
-const API = "http://localhost:4000";
+const API = "//instahambackend.netlify.app";
+//const API = "http://localhost:4000";
 
 export default function Profile() {
   const [userData, setUserData] = useState("");
