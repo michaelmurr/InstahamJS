@@ -1,8 +1,8 @@
 import "../css/signupForm.css";
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useNavigate } from "react-router-dom";
-import { Button, Form, FloatingLabel } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
+import { Alert, Button, Form, FloatingLabel } from "react-bootstrap";
 
 //const API = "http://localhost:4000";
 const API = "//instahambackend.herokuapp.com";
@@ -50,25 +50,26 @@ export default function SignupForm() {
     if (password !== confirm_password)
       return setMessage("Passwords don't match!");
 
-      try{
-        setMessage("");
-        const res = await signupUser({ username, email, password });
-        const msg = await res.json();
+    if(password < 8) return setMessage("Password needs to have at least 8 Characters!");
 
-        setMessage(msg.message);
-        if(res.status === 200) return navigate("/login");
-      }
-      catch(e){
-        console.log("ERROR: ", e);
+    try {
+      setMessage("");
+      const res = await signupUser({ username, email, password });
+      const msg = await res.json();
 
-      }
-      
+      setMessage(msg.message);
+      if (res.status === 200) return navigate("/login");
+    } catch (e) {
+      console.log("ERROR: ", e);
+    }
+
     //redirect to homepage, token?
   };
 
   return (
     <div className="formContainer">
       <div className="cardContainer">
+        <h1>Create an Account</h1>
         <Form
           onSubmit={handleSubmit(username, email, password)}
           className="signupForm"
@@ -85,7 +86,7 @@ export default function SignupForm() {
               />
             </FloatingLabel>
             <Form.Text className="text-muted">
-              Your email will never be shared with anyone.
+              Your email will never be shared.
             </Form.Text>
           </Form.Group>
 
@@ -125,13 +126,21 @@ export default function SignupForm() {
                 className="formInput"
               />
             </FloatingLabel>
-            <Form.Text className="text-muted">Message: {message}</Form.Text>
           </Form.Group>
-
+          <Form.Text className="text-muted">{message}</Form.Text>
+          <br/>
           <Button className="submitBtn" type="submit">
-            Create Account
+            Register
           </Button>
         </Form>
+
+        <Alert variant="success">
+          <p>Already have an account?</p>
+          <hr />
+          <Link to="/login">
+            <Button>Log in</Button>
+          </Link>
+        </Alert>
       </div>
     </div>
   );

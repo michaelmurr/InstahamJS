@@ -1,5 +1,5 @@
-import { Button, Form, FloatingLabel } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Button, Form, FloatingLabel, Alert } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState } from "react";
 import PropTypes from "prop-types";
@@ -21,7 +21,7 @@ async function loginUser(credentials) {
 export default function LoginForm({ setToken }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState(" ");
   const navigate = useNavigate("");
 
   //updates local state
@@ -55,6 +55,7 @@ export default function LoginForm({ setToken }) {
   return (
     <div className="formContainer">
       <div className="cardContainer">
+        <h1>Login</h1>
         <Form
           onSubmit={handleSubmit(username, password)}
           className="signupForm"
@@ -89,6 +90,14 @@ export default function LoginForm({ setToken }) {
             Login
           </Button>
         </Form>
+
+      <Alert variant="success">
+        <p>Don't have an account?</p>
+        <hr/>
+        <Link to="/register" >
+        <Button>Create Account</Button>
+        </Link>
+      </Alert>
       </div>
     </div>
   );
