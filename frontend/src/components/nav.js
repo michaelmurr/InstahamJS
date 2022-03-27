@@ -10,7 +10,7 @@ import profile_icon from "../profile_icon.png";
 
 export default function Nav() {
   return (
-    <Navbar fixed="bottom" className="j">
+    <Navbar fixed="bottom">
       <ul className="navList">
         <li>
           <Link to="/">
@@ -34,14 +34,5 @@ export default function Nav() {
         </li>
       </ul>
     </Navbar>
-    /*}
-      <Link to="/login">
-        <Button>Sign In</Button>
-      </Link>
-
-      <Link to="/register">
-        <Button>Sign Up</Button>
-      </Link>
-  {*/
   );
 }
