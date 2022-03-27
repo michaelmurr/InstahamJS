@@ -1,43 +1,23 @@
 import express from "express";
 import User from "../models/userSchema.js";
+import Post from "../models/postSchema.js";
+import {verify} from "../routes/verifyToken.js";
+
 const router = express.Router();
 
-//Get all users
-router.get("/", async (req, res) => {
-  try {
-    const user = await User.find();
-    res.json(user);
-  } catch (err) {
-    res.json(err);
-    console.log(err);
-  }
-});
-
-//Create a new user
-router.post("/", async (req, res) => {
-  const user = new User({
-    username: req.body.name,
-    email: req.body.email
-  });
-
-  try {
-    const savedUser = await user.save();
-    res.json(savedPost);
-  } catch (err) {
-    res.json({ message: err });
-  }
-});
-
 //Get a specific User
-router.get("/:userId", async (req, res) => {
+router.get("/profile", verify, async (req, res) => {
   try {
-    const user = await User.findById(req.params.userId);
-    res.json(user);
+    const user = await User.findById(req.user);
+    const posts = await Post.find({ownerID: req.user});
+
+    res.send({username: user.username, posts, date_joined: user.date_joined });
   } catch (err) {
-    res.json({ message: err });
+    console.log(err);
+    res.send({ message: err });
   }
 });
-
+/*
 //Delete a user
 router.delete("/:userId", async (req, res) => {
   try {
@@ -54,10 +34,13 @@ router.patch("/:userId", async (req, res) => {
     const updatedUser = await User.updateOne(
       { _id: req.params.userId },
       { $set: { name: req.body.name } }
-    );
-    res.json(updatedUser);
-  } catch (err) {
-    res.json({ message: err });
-  }
-});
-export default router;
+      );
+      res.json(updatedUser);
+    } catch (err) {
+      res.json({ message: err });
+    }
+  });
+  */
+ 
+  export default router;
+  
