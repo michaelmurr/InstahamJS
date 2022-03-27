@@ -9,7 +9,7 @@ const API = "//instahambackend.netlify.app";
 
 export default function Profile() {
   const [userData, setUserData] = useState("");
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState(["", ""]);
   const { token, setToken } = useToken();
   const [loading, setLoading] = useState(true);
 

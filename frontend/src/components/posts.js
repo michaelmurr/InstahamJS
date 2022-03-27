@@ -8,7 +8,7 @@ export default function Posts(props) {
     <div className="fetchedPosts">
       {console.log(props)}
       {props.posts.map((post) => (
-        <div key={post.ownerID} id={post.ownerID} className="postContainer">
+        <div className="postContainer">
           <h1 className="username">@{post.username}</h1>
           <div className="postDate">
             <DayJS format="DD. MMMM YYYY, H:mm">{post.uploadDate}</DayJS>
@@ -22,4 +22,8 @@ export default function Posts(props) {
       ))}
     </div>
   );
+}
+
+Posts.defaultProps = {
+  posts: ["", ""]
 }
