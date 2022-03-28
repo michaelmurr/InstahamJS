@@ -13,6 +13,7 @@ async function fetchUser(auth_token) {
   const res = await fetch(API + "/api/profile", {
     headers: {
       "auth": auth_token,
+      "Access-Control-Allow-Origin": "*",
     },
   });
   const json = await res.json();
