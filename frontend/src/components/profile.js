@@ -12,7 +12,7 @@ const API = "//instahambackend.netlify.app";
 async function fetchUser(auth_token) {
   const res = await fetch(API + "/api/profile", {
     headers: {
-      auth: auth_token,
+      "auth": auth_token,
     },
   });
   const json = await res.json();
