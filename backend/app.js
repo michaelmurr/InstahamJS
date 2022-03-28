@@ -23,11 +23,12 @@ const app = express();
 const corsOptions = {
   origin: "*",
   credentials: true,
-  optionSuccessStatus: 200,
+  optionSuccessStatus: 200, 
+  
 };
 
 //Middleware
-app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
