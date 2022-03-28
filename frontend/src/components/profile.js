@@ -11,7 +11,6 @@ const API = "//instahambackend.netlify.app";
 
 async function fetchUser(auth_token) {
   const res = await fetch(API + "/api/profile", {
-    "mode": "cors",
     headers: {
       "auth": auth_token,
     },
@@ -28,7 +27,7 @@ export default function Profile() {
   
   useEffect(() => {
 
-    if (!token) return <LoginForm>{navigate("/login")}</LoginForm>;
+    if (!token) return <LoginForm setToken={setToken}/>;
 
     let isMounted = true;
 
