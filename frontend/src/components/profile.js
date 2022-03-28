@@ -28,7 +28,7 @@ export default function Profile() {
   
   useEffect(() => {
 
-    if (!token) return <>{navigate("/login")}</>;
+    if (!token) return <LoginForm>{navigate("/login")}</LoginForm>;
 
     let isMounted = true;
 
