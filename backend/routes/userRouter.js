@@ -11,7 +11,8 @@ router.get("/profile", verify, async (req, res) => {
     const user = await User.findById(req.user);
     const posts = await Post.find({ownerID: req.user});
 
-    res.send({username: user.username, posts, date_joined: user.date_joined });
+    const data = JSON.stringify({username: user.username, posts, date_joined: user.date_joined });
+    res.send(data);
   } catch (err) {
     console.log(err);
     res.send({ message: err });
