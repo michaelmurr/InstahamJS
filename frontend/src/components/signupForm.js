@@ -20,6 +20,7 @@ async function signupUser(credentials) {
     .catch((err) => console.log(err));
 }
 
+
 export default function SignupForm() {
   //define Hooks
   const [username, setUsername] = useState("");
@@ -43,27 +44,28 @@ export default function SignupForm() {
     setConfirm_Password(event.target.value);
   };
 
+  //check the input
+  const validateInput = () => {
+    if(username < 5 || username > 16) return setMessage("Length of username may be between 5 and 16 Characters!")
+    if(password < 8) return setMessage("Password needs to have at least 8 characters!");
+    if (password !== confirm_password) return setMessage("Passwords don't match!");
+  }
+
   //handles the submitting process
   const handleSubmit = () => async (event) => {
     event.preventDefault();
-
-    if (password !== confirm_password)
-      return setMessage("Passwords don't match!");
-
-    if(password < 8) return setMessage("Password needs to have at least 8 Characters!");
+    
+    validateInput();
 
     try {
-      setMessage("");
       const res = await signupUser({ username, email, password });
       const msg = await res.json();
 
       setMessage(msg.message);
       if (res.status === 200) return navigate("/login");
     } catch (e) {
-      console.log("ERROR: ", e);
+      console.log(e);
     }
-
-    //redirect to homepage, token?
   };
 
   return (
