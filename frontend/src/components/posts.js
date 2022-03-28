@@ -24,5 +24,5 @@ export default function Posts(props) {
 }
 
 Posts.defaultProps = {
-  posts: ["", ""]
+  posts: []
 }

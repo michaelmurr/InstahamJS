@@ -24,13 +24,16 @@ export default function Profile() {
   const [userData, setUserData] = useState("");
   const [posts, setPosts] = useState([]);
   const { token, setToken } = useToken();
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-
+  
   useEffect(() => {
+
+    if (!token) return <>{navigate("/login")}</>;
+
     let isMounted = true;
 
-    fetchUser(token).then((data) => {
+    fetchUser(token)
+    .then((data) => {
       if (isMounted) {
         setUserData(data);
         setPosts(data.posts);
@@ -45,8 +48,6 @@ export default function Profile() {
   const logOut = () => {
     localStorage.removeItem("token");
   };
-
-  if (!token) return <>{navigate("/login")}</>;
 
   return (
     <div className="profileWrapper">
