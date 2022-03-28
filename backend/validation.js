@@ -14,7 +14,7 @@ const loginValidation = Joi.object({
 const registerValidation = Joi.object({
     username: 
         Joi.string()
-        .min(4)
+        .min(5)
         .required(),
     email: 
         Joi.string()
@@ -22,7 +22,7 @@ const registerValidation = Joi.object({
         .email(),
     password: 
         Joi.string()
-        .min(6)
+        .min(8)
         .required(),
 });
 
