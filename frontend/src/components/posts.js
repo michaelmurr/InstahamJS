@@ -6,7 +6,6 @@ import heart_icon from "../heart_icon.png";
 export default function Posts(props) {
   return (
     <div className="fetchedPosts">
-      {console.log(props)}
       {props.posts.map((post) => (
         <div className="postContainer">
           <h1 className="username">@{post.username}</h1>
