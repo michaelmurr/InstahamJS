@@ -10,37 +10,26 @@ import "../css/profile.css";
 const API = "https://instahamjs-backend.onrender.com";
 //const API = "http://localhost:4000";
 
-async function fetchUser(auth_token) {
-  const res = await fetch(API + "/api/profile", {
-    headers: {
-      "auth": auth_token,
-    },
-  });
-  const json = await res.json();
-  return json;
-}
-
 export default function Profile() {
   const [userData, setUserData] = useState("");
   const [posts, setPosts] = useState([]);
   const { token, setToken } = useToken();
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (!token) return <LoginForm setToken={setToken} />;
 
-    let isMounted = true;
+    async function fetchUser() {
+      const res = await fetch(API + "/api/profile", {
+        headers: {
+          auth: token,
+        },
+      });
+      const json = await res.json();
+      setUserData(json);
+      setPosts(json.posts);
+    }
 
-    fetchUser(token).then((data) => {
-      if (isMounted) {
-        setUserData(data);
-        setPosts(data.posts);
-      }
-    });
-
-    return () => {
-      isMounted = false;
-    };
+    fetchUser();
   }, []);
 
   const logOut = () => {
