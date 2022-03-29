@@ -13,6 +13,7 @@ import indexRouter from "./routes/indexRouter.js";
 import authRouter from "./routes/auth.js";
 import postRouter from "./routes/postsRouter.js";
 import userRouter from "./routes/userRouter.js";
+import healthRouter from "./routes/healthRouter.js";
 
 const port = process.env.PORT || 4000;
 const __filename = fileURLToPath(import.meta.url);
@@ -20,12 +21,22 @@ const __dirname = dirname(__filename);
 
 const app = express();
 
-const corsOptions = {
-  origin: "*",
+// Set up a whitelist and check against it:
+const whitelist = ['https://instahamjs.netlify.app'];
+
+let corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  },
   credentials: true,
-  optionSuccessStatus: 200, 
-  
-};
+  optionsSuccessStatus: 200,
+}
+
+app.use(healthRouter);
 
 //Middleware
 app.use(cors(corsOptions));
