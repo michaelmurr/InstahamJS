@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import "../css/signupForm.css";
 
 const API = "https://instahamjs-backend.onrender.com";
+//const API = "http://localhost:4000";
 
 async function loginUser(credentials) {
   return await fetch(API + "/login", {
