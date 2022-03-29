@@ -12,7 +12,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import LoginForm from "./loginForm";
 import SignupForm from "./signupForm";
 
-const API = "//instahambackend.herokuapp.com";
+const API = "https://instahamjs-backend.onrender.com";
 
 export default function App() {
   const [loading, setLoading] = useState(true);

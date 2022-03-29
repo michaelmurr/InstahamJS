@@ -5,7 +5,7 @@ import { useState } from "react";
 import useToken from "./useToken";
 import LoginForm from "./loginForm";
 
-const API = "//instahambackend.herokuapp.com";
+const API = "https://instahamjs-backend.onrender.com";
 
 async function uploadPost(form_data, auth_token) {
   return fetch(API + "/api/upload", {

@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Alert, Button, Form, FloatingLabel } from "react-bootstrap";
 
 //const API = "http://localhost:4000";
-const API = "//instahambackend.herokuapp.com";
+const API = "https://instahamjs-backend.onrender.com";
 
 async function signupUser(credentials) {
   return await fetch(API + "/register", {

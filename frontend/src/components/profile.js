@@ -6,7 +6,7 @@ import DayJS from "react-dayjs";
 import { Button } from "react-bootstrap";
 import { useNavigate, Link } from "react-router-dom";
 
-const API = "//instahambackend.netlify.app";
+const API = "https://instahamjs-backend.onrender.com";
 //const API = "http://localhost:4000";
 
 async function fetchUser(auth_token) {
