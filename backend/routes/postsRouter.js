@@ -21,7 +21,7 @@ router.post("/upload", verify, async (req, res) => {
     console.error(e);
     res.status(400).send(e);
   }
-  res.status(200).send("Created new post!");
+  res.status(200).send({message: "Created new post!"});
 });
 
 router.get("/posts", async (req, res) => {
