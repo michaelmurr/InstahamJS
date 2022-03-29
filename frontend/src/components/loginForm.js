@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import "../css/signupForm.css";
 
-const API = "//instahambackend.herokuapp.com";
+const API = "https://instahamjs-backend.onrender.com";
 
 async function loginUser(credentials) {
   return await fetch(API + "/login", {
