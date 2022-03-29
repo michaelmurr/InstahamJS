@@ -9,7 +9,7 @@ const router = express.Router();
 router.get("/profile", verify, async (req, res) => {
   try {
     const user = await User.findById(req.user);
-    const posts = await Post.find({ownerID: req.user});
+    const posts = await Post.find({ownerID: req.user}).sort({uploadDate: -1});
 
     const data = JSON.stringify({username: user.username, posts, date_joined: user.date_joined });
     res.send(data);
