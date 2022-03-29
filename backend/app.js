@@ -21,19 +21,29 @@ const __dirname = dirname(__filename);
 
 const app = express();
 
-// Set up a whitelist and check against it:
-const whitelist = ['https://instahamjs.netlify.app'];
+let corsOptions;
 
-let corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  },
-  credentials: true,
-  optionsSuccessStatus: 200,
+if (process.env.PRODUCTION == "true") {
+  // Set up a whitelist and check against it:
+  const whitelist = ["https://instahamjs.netlify.app"];
+
+  corsOptions = {
+    origin: function (origin, callback) {
+      if (whitelist.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+    optionsSuccessStatus: 200,
+  };
+} else {
+  corsOptions = {
+    origin: "*",
+    credentials: true,
+    optionsSuccessStatus: 200,
+  };
 }
 
 app.use(healthRouter);
