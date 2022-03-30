@@ -24,8 +24,8 @@ export default function Upload() {
   const [text, setText] = useState("");
   const { token, setToken } = useToken();
   const navigate = useNavigate();
+  const [message, setMessage] = useState("");
 
-  if (!token) return <LoginForm setToken={setToken} />;
 
   //update local state
   function onTextChange(event) {
@@ -41,25 +41,34 @@ export default function Upload() {
       navigate("/");
     } else {
       console.log(json);
+      setMessage(json);
     }
   };
 
   return (
-    <div className="uploadForm">
-      <Form onSubmit={handleSubmit()}>
-        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-          <Form.Control
-            as="textarea"
-            rows={3}
-            value={text}
-            placeholder="Share something"
-            onChange={onTextChange}
-          />
-        </Form.Group>
-        <Button className="submitBtn" type="submit">
-          Post
-        </Button>
-      </Form>
-    </div>
+    <>
+      {!token && <LoginForm setToken={setToken} />}
+      {token && (
+        <div className="uploadForm">
+          <Form onSubmit={handleSubmit()}>
+            <Form.Group
+              className="mb-3"
+              controlId="exampleForm.ControlTextarea1"
+            >
+              <Form.Control
+                as="textarea"
+                rows={3}
+                value={text}
+                placeholder="Share something"
+                onChange={onTextChange}
+              />
+            </Form.Group>
+            <Button className="submitBtn" type="submit">
+              Post
+            </Button>
+          </Form>
+        </div>
+      )}
+    </>
   );
 }

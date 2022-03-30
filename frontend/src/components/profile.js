@@ -38,8 +38,8 @@ export default function Profile() {
 
   return (
     <>
-      {isLoading  && token && <h1>Loading....</h1>}
       {!token && <LoginForm setToken={setToken}/>}
+      {isLoading  && token && <h1>Loading....</h1>}
       {posts && userData && (
         <div>
           <div className="profileWrapper">
