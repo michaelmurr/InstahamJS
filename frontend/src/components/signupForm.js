@@ -44,18 +44,15 @@ export default function SignupForm() {
     setConfirm_Password(event.target.value);
   };
 
-  //check the input
-  const validateInput = () => {
-    if(username < 5 || username > 16) return setMessage("Length of username may be between 5 and 16 Characters!")
-    if(password < 8) return setMessage("Password needs to have at least 8 characters!");
-    if (password !== confirm_password) return setMessage("Passwords don't match!");
-  }
-
+  
   //handles the submitting process
   const handleSubmit = () => async (event) => {
     event.preventDefault();
     
-    validateInput();
+    //check the input
+    if(username < 5 || username > 16) return setMessage("Length of username may be between 5 and 16 Characters!")
+    if(password < 8) return setMessage("Password needs to have at least 8 characters!");
+    if (password !== confirm_password) return setMessage("Passwords don't match!");
 
     try {
       const res = await signupUser({ username, email, password });
