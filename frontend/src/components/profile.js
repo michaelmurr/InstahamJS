@@ -13,7 +13,6 @@ const API = "https://instahamjs-backend.onrender.com";
 export default function Profile() {
   const [userData, setUserData] = useState("");
   const [posts, setPosts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const { token, setToken } = useToken();
 
   useEffect(() => {
@@ -26,7 +25,6 @@ export default function Profile() {
         },
       });
       const json = await res.json();
-      setIsLoading(false);
       setUserData(json);
       setPosts(json.posts);
     }
@@ -40,25 +38,19 @@ export default function Profile() {
 
   return (
     <>
-    { isLoading && <h1>Loading...</h1>}
-      {posts && userData && (
-        <div>
-          <div className="profileWrapper">
-            <h1 className="heading">Your Profile</h1>
-
-            <h2 className="username">@{userData.username}</h2>
-            <p className="joinDate">
-              joined on{" "}
-              <DayJS format="DD. MMMM YYYY, H:mm">{userData.date_joined}</DayJS>
-            </p>
-            <Link to="/login">
-              <Button onClick={logOut}>Log out</Button>
-            </Link>
-          </div>
-          <hr />
-          <Posts posts={posts} />
-        </div>
-      )}
+      <div className="profileWrapper">
+        <h1 className="heading">Your Profile</h1>
+        <h2 className="username">@{userData.username}</h2>
+        <p className="joinDate">
+          joined on{" "}
+          <DayJS format="DD. MMMM YYYY, H:mm">{userData.date_joined}</DayJS>
+        </p>
+        <Link to="/login">
+          <Button onClick={logOut}>Log out</Button>
+        </Link>
+      </div>
+      <hr />
+      <Posts posts={posts} />
     </>
   );
 }
