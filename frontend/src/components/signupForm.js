@@ -50,8 +50,8 @@ export default function SignupForm() {
     event.preventDefault();
     
     //check the input
-    if(username < 5 || username > 16) return setMessage("Length of username may be between 5 and 16 Characters!")
-    if(password < 8) return setMessage("Password needs to have at least 8 characters!");
+    if(username.length < 5 || username.length > 16) return setMessage("Length of username may be between 5 and 16 Characters!");
+    if(password.length < 8) return setMessage("Password needs to have at least 8 characters!");
     if (password !== confirm_password) return setMessage("Passwords don't match!");
 
     try {
