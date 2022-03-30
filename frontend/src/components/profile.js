@@ -17,8 +17,6 @@ export default function Profile() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (!token) return <LoginForm setToken={setToken} />;
-
     async function fetchUser() {
       const res = await fetch(API + "/api/profile", {
         headers: {
@@ -40,7 +38,8 @@ export default function Profile() {
 
   return (
     <>
-      {isLoading && <h1>Loading....</h1>}
+      {isLoading  && token && <h1>Loading....</h1>}
+      {!token && <LoginForm setToken={setToken}/>}
       {posts && userData && (
         <div>
           <div className="profileWrapper">
