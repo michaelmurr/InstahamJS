@@ -2,6 +2,7 @@ import "../css/app.css";
 import "../css/posts.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+import useToken from "./useToken";
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Nav from "./nav";
@@ -13,12 +14,14 @@ import LoginForm from "./loginForm";
 import SignupForm from "./signupForm";
 
 export default function App() {
+  const { token, setToken } = useToken();
+
   return (
     <div className="App">
       <Router>
         <Nav />
         <Routes>
-          <Route path="/" exact element={<Feed/>} />
+          <Route path="/" exact element={<Feed />} />
           <Route
             path="/login"
             exact
