@@ -39,12 +39,7 @@ export default function Upload() {
 
     console.log(response);
     console.log(json);
-    if (response.status === 200) {
-      navigate("/");
-    } else {
-      console.log(json);
-      setMessage(json);
-    }
+    navigate("/");
   };
 
   return (
