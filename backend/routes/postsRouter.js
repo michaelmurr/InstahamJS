@@ -25,7 +25,7 @@ router.post("/upload", verify, async (req, res) => {
 });
 
 router.get("/posts", async (req, res) => {
-  const posts = await Post.find({}).sort({ uploadDate: -1 }).limit(20);
+  const posts = await Post.find({}).sort({ uploadDate: -1 }).limit(200);
   res.send({ posts });
 });
 
