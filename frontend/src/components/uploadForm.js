@@ -37,6 +37,8 @@ export default function Upload() {
     const response = await uploadPost(text, token);
     const json = await response.json();
 
+    console.log(response);
+    console.log(json);
     if (response.status === 200) {
       navigate("/");
     } else {
