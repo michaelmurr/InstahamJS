@@ -21,6 +21,14 @@ const userSchema = mongoose.Schema({
     type: String,
     required: false,
   }],
+  liked_posts:[{
+    type: String,
+    required: false,
+  }],
+  comments: [{
+    type: String,
+    required: false,
+  }]
 });
 
 export default mongoose.model("Users", userSchema);
