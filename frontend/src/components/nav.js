@@ -2,11 +2,11 @@ import "../css/nav.css";
 import React from "react";
 import { Link } from "react-router-dom";
 import { Navbar } from "react-bootstrap";
-import home_icon from "../home_icon.png";
-import upload_icon from "../plus_icon.png";
-import search_icon from "../search_icon.png";
+import home_icon from "../icons/home_icon.png";
+import upload_icon from "../icons/plus_icon.png";
+import search_icon from "../icons/search_icon.png";
 import "bootstrap/dist/css/bootstrap.min.css";
-import profile_icon from "../profile_icon.png";
+import profile_icon from "../icons/profile_icon.png";
 
 export default function Nav() {
   return (
