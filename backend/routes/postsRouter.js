@@ -21,12 +21,23 @@ router.post("/upload", verify, async (req, res) => {
     console.error(e);
     res.status(400).send(e);
   }
-  res.status(200).send({message: "Created new post!"});
+  res.status(200).send({ message: "Created new post!" });
 });
 
 router.get("/posts", async (req, res) => {
   const posts = await Post.find({}).sort({ uploadDate: -1 });
   res.send({ posts });
+});
+
+router.get("/feed", verify, async (req, res) => {
+  const posts = await Post.find({}).sort({ uploadDate: -1 });
+  const user = await User.findById(req.user);
+
+  const data = {
+    posts,
+    liked_posts: user.liked_posts
+  }
+  res.send(JSON.stringify(data));
 });
 
 export default router;
