@@ -13,10 +13,10 @@ export default function Posts(props) {
         setPosts(props.posts);
         setShouldUpdatePosts(false);
       }
-  });
-
-  return (
-    <div className="fetchedPosts">
+    });
+    
+    return (
+      <div className="fetchedPosts">
       {posts.map((post) => (
         <div className="postContainer" key={post._id}>
           <h1 className="username">@{post.username}</h1>
@@ -24,7 +24,7 @@ export default function Posts(props) {
             <DayJS format="DD. MMMM YYYY, H:mm">{post.uploadDate}</DayJS>
           </div>
           <p>{post.content}</p>
-          <div onClick={() => setPosts(props.handleLike(post))}>
+          <div onClick={() => setPosts(props.handleLike(post, posts))}>
             <img src={heart_icon} alt="" />
             {post.likes}
           </div>

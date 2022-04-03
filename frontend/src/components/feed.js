@@ -8,8 +8,8 @@ export default function Feed() {
   const [isLoading, setIsLoading] = useState(true);
   const { token } = useToken();
 
-  //const API = "https://instahamjs-backend.onrender.com"
-  const API = "http://localhost:4000";
+  const API = "https://instahamjs-backend.onrender.com"
+  //const API = "http://localhost:4000";
 
   useEffect(() => {
     async function fetchData() {
@@ -19,7 +19,6 @@ export default function Feed() {
       if (!token) {
         url = API + "/api/posts";
         options = { mode: "cors" };
-
       } else {
         url = API + "/api/feed";
         options = {
@@ -32,8 +31,18 @@ export default function Feed() {
 
       const response = await fetch(url, options);
       const data = await response.json();
+      let items = [...data.posts];
 
-      setPosts(data.posts);
+      if (!token) {
+        for (let i = 0; i < items.length; i++) {
+          let item = { ...items[i] };
+          item.isLiked = false;
+          
+          items[i] = item;
+        }
+      }
+
+      setPosts(items);
       setLikedPosts(data.liked_posts);
       setIsLoading(false);
     }
@@ -48,27 +57,32 @@ export default function Feed() {
       let item = { ...items[i] };
       for (let j = 0; j <= test; j++) {
         item._id === test[j]
-          ? (item[i].isLiked = true)
+        ? (item[i].isLiked = true)
           : (item[i].isLiked = false);
-        items[i] = item;
-      }
+          items[i] = item;
+        }
     }
     setPosts(items);
   }
 
-  function handleLike(likedPost) {
-    let items = [...posts];
-    
+  function handleLike(likedPost, param_posts) {
+    let items = [...param_posts];
+
+
     for (let i = 0; i < items.length; i++) {
-      if (posts[i]._id === likedPost._id) {
+      if (param_posts[i]._id === likedPost._id) {
         let item = { ...items[i] };
-
-        item.likes++;
-
-        item.isLiked = true;
+        
+        if(item.isLiked){
+          item.likes--;
+          item.isLiked = false;
+        }else if (item.isLiked === false){
+          item.likes++;
+          item.isLiked = true;
+        }
 
         items[i] = item;
-
+        console.log(items);
         return items;
       }
     }
@@ -77,9 +91,7 @@ export default function Feed() {
   return (
     <>
       {isLoading && <h1>Loading...</h1>}
-      {!isLoading && (
-        <Posts posts={posts} handleLike={handleLike} />
-      )}
+      {!isLoading && <Posts posts={posts} handleLike={handleLike} />}
     </>
   );
 }
