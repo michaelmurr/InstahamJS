@@ -35,9 +35,49 @@ router.get("/feed", verify, async (req, res) => {
 
   const data = {
     posts,
-    liked_posts: user.liked_posts
-  }
+    liked_posts: user.liked_posts,
+  };
   res.send(JSON.stringify(data));
+});
+
+router.patch("/like/:id", verify, async (req, res) => {
+  try {
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: req.user },
+      { $push: { liked_posts: req.params.id } }
+    );
+  } catch (error) {
+    console.log("Saving liked failed!\n");
+    res.json({ message: error });
+  }
+  
+  try {
+    Post.findOneAndUpdate({ _id: req.params.id }, { $inc: { likes: 1 } });
+  } catch (error) {
+    console.log("Liking Post failed!\n");
+    res.json({ message: error });
+  }
+  res.status(200).send();
+});
+
+router.patch("/remove_like/:id", verify, async (req, res) => {
+  try {
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: req.user },
+      { $push: { liked_posts: req.params.id } }
+    );
+  } catch (error) {
+    console.log("Saving liked failed!\n");
+    res.json({ message: error });
+  }
+  
+  try {
+    Post.findOneAndUpdate({ _id: req.params.id }, { $inc: { likes: -1 } });
+  } catch (error) {
+    console.log("Removing Like from Post failed!\n");
+    res.json({ message: error });
+  }
+  res.status(200).send();
 });
 
 export default router;
