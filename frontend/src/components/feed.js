@@ -8,7 +8,7 @@ export default function Feed() {
   const [isLoading, setIsLoading] = useState(true);
   const { token } = useToken();
 
-   const API = "https://instahamjs-backend.onrender.com"
+  const API = "https://instahamjs-backend.onrender.com"
   //const API = "http://localhost:4000";
 
   useEffect(() => {
@@ -48,7 +48,7 @@ export default function Feed() {
     fetchData();
   }, []);
 
-  async function handleLike(likedPost, param_posts) {
+  function handleLike(likedPost, param_posts) {
     let items = [...param_posts];
     for (let i = 0; i < items.length; i++) {
       if (param_posts[i]._id === likedPost._id) {
@@ -56,17 +56,19 @@ export default function Feed() {
         console.log(item);
         
         if(item.isLiked){
+          console.log(1);
           item.likes--;
           item.isLiked = false;
 
-        }else if (item.isLiked === false){
+        }else if (!item.isLiked || item.isLiked == null){
+          console.log(2); 
           item.likes++;
           item.isLiked = true;
         }
 
 
         items[i] = item;
-        console.log("Yup, u got a token");
+        console.log(item);
         return items;
       }
     }
