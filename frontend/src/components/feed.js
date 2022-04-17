@@ -37,7 +37,7 @@ export default function Feed() {
         for (let i = 0; i < items.length; i++) {
           let item = { ...items[i] };
           item.isLiked = false;
-          
+
           items[i] = item;
         }
       }
@@ -53,19 +53,27 @@ export default function Feed() {
     for (let i = 0; i < items.length; i++) {
       if (param_posts[i]._id === likedPost._id) {
         let item = { ...items[i] };
-        console.log(item);
-        
-        if(item.isLiked){
+        console.log(item._id);
+
+        if (item.isLiked) {
           console.log(1);
           item.likes--;
           item.isLiked = false;
-
-        }else if (!item.isLiked || item.isLiked == null){
-          console.log(2); 
+          fetch(API + "/api/remove_like/" + item._id, {
+            method: "patch",
+            mode: "cors"
+          });
+        } else if (!item.isLiked || item.isLiked == null) {
+          console.log(2);
           item.likes++;
           item.isLiked = true;
-        }
 
+          fetch(API + "/api/like/" + item._id, {
+            method: "patch",
+            mode: "cors"
+
+          });
+        }
 
         items[i] = item;
         console.log(item);
