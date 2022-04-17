@@ -40,9 +40,10 @@ if (process.env.PRODUCTION == "true") {
   };
 } else {
   corsOptions = {
-    origin: "*",
-    credentials: true,
-    optionsSuccessStatus: 200,
+    "origin": "*",
+    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+    "credentials": true,
+    "optionsSuccessStatus": 204,
   };
 }
 
