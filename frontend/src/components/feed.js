@@ -8,7 +8,7 @@ export default function Feed() {
   const [isLoading, setIsLoading] = useState(true);
   const { token } = useToken();
 
-  const API = "https://instahamjs-backend.onrender.com"
+  const API = "https://instahamjs-backend.onrender.com";
   //const API = "http://localhost:4000";
 
   useEffect(() => {
@@ -40,6 +40,19 @@ export default function Feed() {
 
           items[i] = item;
         }
+      } else {
+        for (let i = 0; i < items.length; i++) {
+          let item = { ...items[i] };
+
+          for (let j = 0; j < data.liked_posts.length; j++) {
+            if (item._id === data.liked_posts[j]) {
+              item.isLiked = true;
+            } else {
+              item.isLiked = false;
+            }
+          }
+          items[i] = item;
+        }
       }
       setPosts(items);
       setLikedPosts(data.liked_posts);
@@ -59,9 +72,12 @@ export default function Feed() {
           console.log(1);
           item.likes--;
           item.isLiked = false;
+
           fetch(API + "/api/remove_like/" + item._id, {
-            method: "patch",
-            mode: "cors"
+            method: "PATCH",
+            headers: {
+              auth: token,
+            },
           });
         } else if (!item.isLiked || item.isLiked == null) {
           console.log(2);
@@ -69,9 +85,10 @@ export default function Feed() {
           item.isLiked = true;
 
           fetch(API + "/api/like/" + item._id, {
-            method: "patch",
-            mode: "cors"
-
+            method: "PATCH",
+            headers: {
+              auth: token,
+            },
           });
         }
 

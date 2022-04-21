@@ -32,7 +32,6 @@ router.get("/posts", async (req, res) => {
 router.get("/feed", verify, async (req, res) => {
   const posts = await Post.find({}).sort({ uploadDate: -1 });
   const user = await User.findById(req.user);
-
   const data = {
     posts,
     liked_posts: user.liked_posts,
@@ -46,17 +45,17 @@ router.patch("/like/:id", verify, async (req, res) => {
       { _id: req.user },
       { $push: { liked_posts: req.params.id } }
     );
+
+    const updatedPost = await Post.findOneAndUpdate(
+      { _id: req.params.id },
+      { $inc: { likes: 1 } }
+    );
+    
   } catch (error) {
     console.log("Saving liked failed!\n");
     res.json({ message: error });
   }
-  
-  try {
-    Post.findOneAndUpdate({ _id: req.params.id }, { $inc: { likes: 1 } });
-  } catch (error) {
-    console.log("Liking Post failed!\n");
-    res.json({ message: error });
-  }
+
   res.status(200).send();
 });
 
@@ -64,17 +63,16 @@ router.patch("/remove_like/:id", verify, async (req, res) => {
   try {
     const updatedUser = await User.findOneAndUpdate(
       { _id: req.user },
-      { $push: { liked_posts: req.params.id } }
+      { $pullAll: { liked_posts: [req.params.id] } }
     );
+
+    const updatedPost = await Post.findOneAndUpdate(
+      { _id: req.params.id },
+      { $inc: { likes: -1 } }
+    );
+    console.log(updatedPost);
   } catch (error) {
-    console.log("Saving liked failed!\n");
-    res.json({ message: error });
-  }
-  
-  try {
-    Post.findOneAndUpdate({ _id: req.params.id }, { $inc: { likes: -1 } });
-  } catch (error) {
-    console.log("Removing Like from Post failed!\n");
+    console.log("Rem_like failed!\n");
     res.json({ message: error });
   }
   res.status(200).send();
