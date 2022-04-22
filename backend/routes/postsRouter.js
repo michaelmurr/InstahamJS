@@ -70,7 +70,6 @@ router.patch("/remove_like/:id", verify, async (req, res) => {
       { _id: req.params.id },
       { $inc: { likes: -1 } }
     );
-    console.log(updatedPost);
   } catch (error) {
     console.log("Rem_like failed!\n");
     res.json({ message: error });

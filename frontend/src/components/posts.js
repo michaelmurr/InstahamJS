@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import {useNavigate} from "react-router-dom";
 import DayJS from "react-dayjs";
 import heart_icon from "../icons/heart_icon.png";
+import heart_icon_filled from "../icons/heart_icon_filled.png";
 import useToken from "./useToken";
 
 export default function Posts(props) {
@@ -37,7 +38,8 @@ export default function Posts(props) {
               }
             }}
           >
-            <img src={heart_icon} alt="" />
+            {post.isLiked && <img src={heart_icon_filled} alt="" />}
+            {!post.isLiked && <img src={heart_icon} alt="" />}
             {post.likes}
           </div>
         </div>

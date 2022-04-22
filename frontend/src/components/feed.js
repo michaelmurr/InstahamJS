@@ -66,10 +66,8 @@ export default function Feed() {
     for (let i = 0; i < items.length; i++) {
       if (param_posts[i]._id === likedPost._id) {
         let item = { ...items[i] };
-        console.log(item._id);
 
         if (item.isLiked) {
-          console.log(1);
           item.likes--;
           item.isLiked = false;
 
@@ -80,7 +78,6 @@ export default function Feed() {
             },
           });
         } else if (!item.isLiked || item.isLiked == null) {
-          console.log(2);
           item.likes++;
           item.isLiked = true;
 
@@ -93,7 +90,6 @@ export default function Feed() {
         }
 
         items[i] = item;
-        console.log(item);
         return items;
       }
     }
