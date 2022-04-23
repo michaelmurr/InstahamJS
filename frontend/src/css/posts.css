@@ -7,6 +7,7 @@
     font-size: 1.2rem;
     border-bottom: 2px solid grey;
     padding: 5%;
+    position: relative;
 }
 
 .username{
@@ -14,4 +15,10 @@
 }
 .postDate{
     color: #666;
+}
+
+#dropdown-basic-button{
+    position: absolute;
+    right: 0;
+    bottom: 0;
 }
