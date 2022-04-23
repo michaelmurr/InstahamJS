@@ -8,8 +8,8 @@ export default function Feed() {
   const [uid, setUid] = useState(null);
   const { token } = useToken();
 
-  //const API = "https://instahamjs-backend.onrender.com";
-  const API = "http://localhost:4000";
+  const API = "https://instahamjs-backend.onrender.com";
+  //const API = "http://localhost:4000";
 
   useEffect(() => {
     fetchData();
