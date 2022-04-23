@@ -1,15 +1,16 @@
 import "../css/posts.css";
 import React, { useEffect, useState } from "react";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import DayJS from "react-dayjs";
 import heart_icon from "../icons/heart_icon.png";
 import heart_icon_filled from "../icons/heart_icon_filled.png";
 import useToken from "./useToken";
+import { DropdownButton, Dropdown } from "react-bootstrap";
 
 export default function Posts(props) {
   const [posts, setPosts] = useState([]);
   const [shouldUpdatePosts, setShouldUpdatePosts] = useState(true);
-  const { token, setToken } = useToken();
+  const { token } = useToken();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,7 +19,7 @@ export default function Posts(props) {
         setPosts(props.posts);
         setShouldUpdatePosts(false);
       }
-  });
+  },[shouldUpdatePosts, props.posts]);
 
   return (
     <div className="fetchedPosts">
@@ -31,9 +32,9 @@ export default function Posts(props) {
           <p>{post.content}</p>
           <div
             onClick={() => {
-              if(token){
+              if (token) {
                 setPosts(props.handleLike(post, posts));
-              }else{
+              } else {
                 navigate("/login");
               }
             }}
@@ -42,6 +43,17 @@ export default function Posts(props) {
             {!post.isLiked && <img src={heart_icon} alt="" />}
             {post.likes}
           </div>
+          {post.ownerID === props.uid && (
+            <DropdownButton id="dropdown-basic-button" title="">
+              <Dropdown.Item
+                onClick={() => {
+                  props.deletePost(post._id);
+                }}
+              >
+                Delete
+              </Dropdown.Item>
+            </DropdownButton>
+          )}
         </div>
       ))}
     </div>
