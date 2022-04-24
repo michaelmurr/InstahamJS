@@ -4,8 +4,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Link, useNavigate } from "react-router-dom";
 import { Alert, Button, Form, FloatingLabel } from "react-bootstrap";
 
-//const API = "http://localhost:4000";
 const API = "https://instahamjs-backend.onrender.com";
+//const API = "http://localhost:4000";
 
 async function signupUser(credentials) {
   return await fetch(API + "/register", {

@@ -59,7 +59,7 @@ export default function Feed() {
       }
     }
     setUid(data.uid);
-    await setPosts(items);
+    setPosts(items);
     setIsLoading(false);
   }
 
