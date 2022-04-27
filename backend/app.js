@@ -14,6 +14,7 @@ import authRouter from "./routes/auth.js";
 import postRouter from "./routes/postsRouter.js";
 import userRouter from "./routes/userRouter.js";
 import healthRouter from "./routes/healthRouter.js";
+import searchRouter from "./routes/searchRouter.js";
 
 const port = process.env.PORT || 4000;
 const __filename = fileURLToPath(import.meta.url);
@@ -60,6 +61,7 @@ app.options("*", cors(corsOptions));
 app.use(authRouter);
 app.use("/api", postRouter);
 app.use("/api", userRouter);
+app.use(searchRouter);
 
 //connect to db
 mongoose

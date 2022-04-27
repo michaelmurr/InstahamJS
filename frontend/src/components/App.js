@@ -12,6 +12,7 @@ import Upload from "./uploadForm";
 
 import LoginForm from "./loginForm";
 import SignupForm from "./signupForm";
+import Search from "./search";
 
 export default function App() {
   const { token, setToken } = useToken();
@@ -30,6 +31,7 @@ export default function App() {
           <Route path="/register" exact element={<SignupForm />} />
           <Route path="/api/upload" exact element={<Upload />} />
           <Route path="/profile" exact element={<Profile />} />
+          <Route path="/search" exact element={<Search />} />
         </Routes>
       </Router>
     </div>

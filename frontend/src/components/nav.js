@@ -1,6 +1,6 @@
 import "../css/nav.css";
 import React from "react";
-import { Link } from "react-router-dom";
+import { createRoutesFromChildren, Link } from "react-router-dom";
 import { Navbar } from "react-bootstrap";
 import home_icon from "../icons/home_icon.png";
 import upload_icon from "../icons/plus_icon.png";
