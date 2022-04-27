@@ -3,7 +3,6 @@ import express from "express";
 import jwt from "jsonwebtoken";
 import User from "../models/userSchema.js";
 import { registerValidation } from "../validation.js";
-import { loginValidation } from "../validation.js";
 
 const router = express.Router();
 const saltRounds = 12; //raising this number bricks the app
@@ -13,13 +12,16 @@ router.post("/register", async (req, res) => {
   const { error } = registerValidation.validate(req.body);
   if (error) return res.status(400).send({ message: error });
 
+  //converting username to lowercase letters before checking whether it exists
+  const username = req.body.username.toLowerCase();
+
   //check if email already exists
   const emailExists = await User.findOne({ email: req.body.email });
   if (emailExists)
     return res.status(400).send({ message: "Email already exists!" });
 
   //check if username already exists
-  const usernameExists = await User.findOne({ username: req.body.username });
+  const usernameExists = await User.findOne({ username });
   if (usernameExists)
     return res.status(400).send({ message: "Username already exists!" });
 
@@ -29,7 +31,7 @@ router.post("/register", async (req, res) => {
 
     try {
       const user = new User({
-        username: req.body.username,
+        username,
         email: req.body.email,
         hashed_password: hash,
       });
@@ -44,17 +46,12 @@ router.post("/register", async (req, res) => {
 
 //Log into existing user
 router.post("/login", async (req, res) => {
-  //validating login is not a good idea, ill just leave the code in tho
-  /*
- const { error } = loginValidation.validate(req.body);
-  if (error) {
-    console.log(error.details[0].message);
-    res.statusMessage = error.details[0].message;
-    return res.status(400).end();
-  }
-*/
+  
+  //Convert username to lowercase before checking for it in the db
+  const username = req.body.username.toLowerCase();
+
   //check if username exists in DB
-  const user = await User.findOne({ username: req.body.username });
+  const user = await User.findOne({ username });
   if (!user)
     return res
       .status(400)
