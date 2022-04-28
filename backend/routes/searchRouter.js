@@ -6,9 +6,8 @@ const router = express.Router();
 router.get("/search/:username", async (req, res) => {
 
     const username = req.params.username.toLowerCase();
-    const user = await User.find({username: {$regex: username}});
-    console.log(user);
-    res.status(200).send();
+    const users = await User.find({username: {$regex: username}});
+    res.status(200).send(users);
 });
 
 export default router;
