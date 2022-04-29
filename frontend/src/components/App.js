@@ -17,15 +17,15 @@ import Search from "./search";
 export default function App() {
   const { token, setToken } = useToken();
 
-  //const API = "https://instahamjs-backend.onrender.com";
-  const API = "http://localhost:4000";
+  const API = "https://instahamjs-backend.onrender.com";
+  //const API = "http://localhost:4000";
 
   return (
     <div className="App">
       <Router>
         <Nav />
         <Routes>
-          <Route path="/" exact element={<Feed />} />
+          <Route path="/" exact element={<Feed api={API}/>} />
           <Route
             path="/login"
             exact

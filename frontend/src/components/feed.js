@@ -2,14 +2,11 @@ import React, { useEffect, useState } from "react";
 import Posts from "./posts";
 import useToken from "./useToken";
 
-export default function Feed() {
+export default function Feed(props) {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [uid, setUid] = useState(null);
   const { token } = useToken();
-
-  const API = "https://instahamjs-backend.onrender.com";
-  //const API = "http://localhost:4000";
 
   useEffect(() => {
     fetchData();
@@ -21,10 +18,10 @@ export default function Feed() {
     let options = {};
 
     if (!token) {
-      url = API + "/api/posts";
+      url = props.api + "/api/posts";
       options = { mode: "cors" };
     } else {
-      url = API + "/api/feed";
+      url = props.api + "/api/feed";
       options = {
         mode: "cors",
         headers: {
@@ -73,7 +70,7 @@ export default function Feed() {
           item.likes--;
           item.isLiked = false;
 
-          fetch(API + "/api/remove_like/" + item._id, {
+          fetch(props.api + "/api/remove_like/" + item._id, {
             method: "PATCH",
             headers: {
               auth: token,
@@ -83,7 +80,7 @@ export default function Feed() {
           item.likes++;
           item.isLiked = true;
 
-          fetch(API + "/api/like/" + item._id, {
+          fetch(props.api + "/api/like/" + item._id, {
             method: "PATCH",
             headers: {
               auth: token,
@@ -98,7 +95,7 @@ export default function Feed() {
   }
 
   async function deletePost(clickedPostId) {
-    await fetch(API + "/api/del_post/" + clickedPostId, {
+    await fetch(props.api + "/api/del_post/" + clickedPostId, {
       method: "DELETE",
       headers: {
         auth: token,
