@@ -6,30 +6,26 @@ import { useState } from "react";
 import useToken from "./useToken";
 import LoginForm from "./loginForm";
 
-const API = "https://instahamjs-backend.onrender.com";
-//const API = "http://localhost:4000";
-
-async function uploadPost(form_data, auth_token) {
-  return fetch(API + "/api/upload", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      auth: auth_token,
-    },
-    body: JSON.stringify({ contentString: form_data }),
-  });
-}
-
-export default function Upload() {
+export default function Upload(props) {
   const [text, setText] = useState("");
   const { token, setToken } = useToken();
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
 
-
   //update local state
   function onTextChange(event) {
     setText(event.target.value);
+  }
+
+  async function uploadPost(form_data, auth_token) {
+    return fetch(props.api + "/api/upload", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        auth: auth_token,
+      },
+      body: JSON.stringify({ contentString: form_data }),
+    });
   }
 
   const handleSubmit = () => async (event) => {

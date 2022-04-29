@@ -7,11 +7,7 @@ import { Button, Dropdown, DropdownButton } from "react-bootstrap";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import "../css/profile.css";
 
-
-const API = "https://instahamjs-backend.onrender.com";
-//const API = "http://localhost:4000";
-
-export default function Profile() {
+export default function Profile(props) {
   const [userData, setUserData] = useState("");
   const [posts, setPosts] = useState([]);
   const { token, setToken } = useToken();
@@ -24,7 +20,7 @@ export default function Profile() {
 
   async function fetchUser() {
     setIsLoading(true);
-    const res = await fetch(API + "/api/profile", {
+    const res = await fetch(props.api + "/api/profile", {
       headers: {
         auth: token,
       },
@@ -36,7 +32,7 @@ export default function Profile() {
   }
 
   async function deletePost(clickedPostId) {
-    await fetch(API + "/api/del_post/" + clickedPostId, {
+    await fetch(props.api + "/api/del_post/" + clickedPostId, {
       method: "DELETE",
       headers: {
         auth: token,
@@ -55,7 +51,7 @@ export default function Profile() {
           item.likes--;
           item.isLiked = false;
 
-          fetch(API + "/api/remove_like/" + item._id, {
+          fetch(props.api + "/api/remove_like/" + item._id, {
             method: "PATCH",
             headers: {
               auth: token,
@@ -65,7 +61,7 @@ export default function Profile() {
           item.likes++;
           item.isLiked = true;
 
-          fetch(API + "/api/like/" + item._id, {
+          fetch(props.api + "/api/like/" + item._id, {
             method: "PATCH",
             headers: {
               auth: token,
@@ -79,15 +75,15 @@ export default function Profile() {
     }
   }
 
-async function deleteUser(){
-  const res = await fetch(API + "/api/deleteAccount", {
-    method:"delete",
-    headers:{
-      auth:token,
-    }
-  });
-  if(res.status === 200) return logOut();
-}
+  async function deleteUser() {
+    const res = await fetch(props.api + "/api/deleteAccount", {
+      method: "delete",
+      headers: {
+        auth: token,
+      },
+    });
+    if (res.status === 200) return logOut();
+  }
 
   const logOut = () => {
     localStorage.removeItem("token");
@@ -112,14 +108,14 @@ async function deleteUser(){
             </Link>
           </div>
           <DropdownButton id="dropdown-basic-button" title="">
-              <Dropdown.Item
-                onClick={() => {
-                  deleteUser();
-                }}
-              >
-                Delete Account
-              </Dropdown.Item>
-            </DropdownButton>
+            <Dropdown.Item
+              onClick={() => {
+                deleteUser();
+              }}
+            >
+              Delete Account
+            </Dropdown.Item>
+          </DropdownButton>
           <hr />
           <Posts
             posts={posts}

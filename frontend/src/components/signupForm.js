@@ -4,24 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Link, useNavigate } from "react-router-dom";
 import { Alert, Button, Form, FloatingLabel } from "react-bootstrap";
 
-const API = "https://instahamjs-backend.onrender.com";
-//const API = "http://localhost:4000";
-
-async function signupUser(credentials) {
-  return await fetch(API + "/register", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Accept": "application/json",
-    },
-    body: JSON.stringify(credentials),
-  })
-    //.then((data) => data.json())
-    .catch((err) => console.log(err));
-}
-
-
-export default function SignupForm() {
+export default function SignupForm(props) {
   //define Hooks
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -44,15 +27,30 @@ export default function SignupForm() {
     setConfirm_Password(event.target.value);
   };
 
-  
+  async function signupUser(credentials) {
+    return await fetch(props.api + "/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(credentials),
+    }).catch((err) => console.log(err));
+  }
+
   //handles the submitting process
   const handleSubmit = () => async (event) => {
     event.preventDefault();
-    
+
     //check the input
-    if(username.length < 5 || username.length > 16) return setMessage("Length of username may be between 5 and 16 Characters!");
-    if(password.length < 8) return setMessage("Password needs to have at least 8 characters!");
-    if (password !== confirm_password) return setMessage("Passwords don't match!");
+    if (username.length < 5 || username.length > 16)
+      return setMessage(
+        "Length of username may be between 5 and 16 Characters!"
+      );
+    if (password.length < 8)
+      return setMessage("Password needs to have at least 8 characters!");
+    if (password !== confirm_password)
+      return setMessage("Passwords don't match!");
 
     try {
       const res = await signupUser({ username, email, password });
@@ -127,7 +125,7 @@ export default function SignupForm() {
             </FloatingLabel>
           </Form.Group>
           <Form.Text className="text-muted">{message}</Form.Text>
-          <br/>
+          <br />
           <Button className="submitBtn" type="submit">
             Register
           </Button>
