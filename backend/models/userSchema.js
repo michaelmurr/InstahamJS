@@ -24,10 +24,6 @@ const userSchema = mongoose.Schema({
   liked_posts:[{
     type: String,
     required: false,
-  }],
-  comments: [{
-    type: String,
-    required: false,
   }]
 });
 
