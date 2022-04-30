@@ -27,15 +27,15 @@ export default function SignupForm(props) {
     setConfirm_Password(event.target.value);
   };
 
-  async function signupUser(credentials) {
-    return await fetch(props.api + "/register", {
+  async function signupUser() {
+    return await fetch(`${props.api}/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
-      body: JSON.stringify(credentials),
-    }).catch((err) => console.log(err));
+      body: JSON.stringify({ username, email, password }),
+    });
   }
 
   //handles the submitting process

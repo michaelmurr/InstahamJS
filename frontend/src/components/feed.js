@@ -9,112 +9,50 @@ export default function Feed(props) {
   const { token } = useToken();
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    async function fetchData() {
+      setIsLoading(true);
 
-  async function fetchData() {
-    setIsLoading(true);
-    let url = "";
-    let options = {};
+      //fetch 2 different routes, depending on whether a token exists or not
+      const response = await fetch(
+        `${props.api}/api/${token ? "feed" : "posts"}`,
+        { mode: "cors", headers: token ? { auth: token } : {} }
+      );
+      const data = await response.json();
 
-    if (!token) {
-      url = props.api + "/api/posts";
-      options = { mode: "cors" };
-    } else {
-      url = props.api + "/api/feed";
-      options = {
-        mode: "cors",
-        headers: {
-          auth: token,
-        },
-      };
-    }
-
-    const response = await fetch(url, options);
-    const data = await response.json();
-    let items = [...data.posts];
-
-    if (!token) {
-      for (let i = 0; i < items.length; i++) {
-        let item = { ...items[i] };
-        item.isLiked = false;
-
-        items[i] = item;
-      }
-    } else {
-      for (let i = 0; i < items.length; i++) {
-        let item = { ...items[i] };
-
-        for (let j = 0; j < data.liked_posts.length; j++) {
-          if (item._id === data.liked_posts[j]) {
-            item.isLiked = true;
-          } else {
-            item.isLiked = false;
-          }
-        }
-        items[i] = item;
-      }
-    }
-    setUid(data.uid);
-    setPosts(items);
-    setIsLoading(false);
-  }
-
-  function handleLike(likedPost, param_posts) {
-    let items = [...param_posts];
-    for (let i = 0; i < items.length; i++) {
-      if (param_posts[i]._id === likedPost._id) {
-        let item = { ...items[i] };
-
-        if (item.isLiked) {
-          item.likes--;
+      let items = [...data.posts];
+      if (!token) {
+        for (let i = 0; i < items.length; i++) {
+          let item = { ...items[i] };
           item.isLiked = false;
 
-          fetch(props.api + "/api/remove_like/" + item._id, {
-            method: "PATCH",
-            headers: {
-              auth: token,
-            },
-          });
-        } else if (!item.isLiked || item.isLiked == null) {
-          item.likes++;
-          item.isLiked = true;
-
-          fetch(props.api + "/api/like/" + item._id, {
-            method: "PATCH",
-            headers: {
-              auth: token,
-            },
-          });
+          items[i] = item;
         }
+      } else {
+        for (let i = 0; i < items.length; i++) {
+          let item = { ...items[i] };
 
-        items[i] = item;
-        return items;
+          for (let j = 0; j < data.liked_posts.length; j++) {
+            if (item._id === data.liked_posts[j]) {
+              item.isLiked = true;
+            } else {
+              item.isLiked = false;
+            }
+          }
+          items[i] = item;
+        }
       }
+      setUid(data.uid);
+      setPosts(items);
+      setIsLoading(false);
     }
-  }
 
-  async function deletePost(clickedPostId) {
-    await fetch(props.api + "/api/del_post/" + clickedPostId, {
-      method: "DELETE",
-      headers: {
-        auth: token,
-      },
-    });
     fetchData();
-  }
+  }, []);
 
   return (
     <>
       {isLoading && <h1>Loading...</h1>}
-      {!isLoading && (
-        <Posts
-          posts={posts}
-          uid={uid}
-          handleLike={handleLike}
-          deletePost={deletePost}
-        />
-      )}
+      {!isLoading && <Posts posts={posts} uid={uid} api={props.api} />}
     </>
   );
 }

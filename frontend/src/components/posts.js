@@ -19,7 +19,54 @@ export default function Posts(props) {
         setPosts(props.posts);
         setShouldUpdatePosts(false);
       }
-  },[shouldUpdatePosts, props.posts]);
+  }, [shouldUpdatePosts, props.posts]);
+
+  function handleLike(likedPost, param_posts) {
+    let items = [...param_posts];
+    for (let i = 0; i < items.length; i++) {
+      if (param_posts[i]._id === likedPost._id) {
+        let item = { ...items[i] };
+
+        if (item.isLiked) {
+          item.likes--;
+          item.isLiked = false;
+
+          fetch(`${props.api}/api/remove_like/${item._id}`, {
+            method: "PATCH",
+            headers: {
+              auth: token,
+            },
+          });
+        } else if (!item.isLiked || item.isLiked == null) {
+          item.likes++;
+          item.isLiked = true;
+
+          fetch(`${props.api}/api/like/${item._id}`, {
+            method: "PATCH",
+            headers: {
+              auth: token,
+            },
+          });
+        }
+        items[i] = item;
+        return items;
+      }
+    }
+  }
+
+  async function deletePost(clickedPostId) {
+    fetch(`${props.api}/api/del_post/${clickedPostId}`, {
+      method: "DELETE",
+      headers: {
+        auth: token,
+      },
+    });
+
+    let updatedPosts = posts.filter((value, index, arr) => {
+      return value._id !== clickedPostId;
+    });
+    setPosts(updatedPosts);
+  }
 
   return (
     <div className="fetchedPosts">
@@ -33,7 +80,7 @@ export default function Posts(props) {
           <div
             onClick={() => {
               if (token) {
-                setPosts(props.handleLike(post, posts));
+                setPosts(handleLike(post, posts));
               } else {
                 navigate("/login");
               }
@@ -47,7 +94,7 @@ export default function Posts(props) {
             <DropdownButton id="dropdown-basic-button" title="">
               <Dropdown.Item
                 onClick={() => {
-                  props.deletePost(post._id);
+                  deletePost(post._id);
                 }}
               >
                 Delete

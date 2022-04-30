@@ -5,26 +5,12 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import "../css/signupForm.css";
 
-const API = "https://instahamjs-backend.onrender.com";
-//const API = "http://localhost:4000";
-
-async function loginUser(credentials) {
-  return await fetch(API + "/login", {
-    method: "POST",
-    mode: "cors",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(credentials),
-  }).catch((err) => console.log(err));
-}
-
-export default function LoginForm({ setToken }) {
+export default function LoginForm(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState(" ");
   const navigate = useNavigate("");
-
+  
   //updates local state
   function onUsernameChange(event) {
     setUsername(event.target.value);
@@ -33,18 +19,29 @@ export default function LoginForm({ setToken }) {
     setPassword(event.target.value);
   }
 
+  async function loginUser() {
+    return await fetch(`${props.api}/login`, {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username, password }),
+    });
+  }
+
   //handles the submitting process
   const handleSubmit = () => async (event) => {
     event.preventDefault();
     try{
-      const res = await loginUser({ username, password });
+      const res = await loginUser();
       const token = await res.json();
 
       //exit if something failed
       if(res.status !== 200) return setMessage(token.message);
 
       //set token and redirect on success
-      setToken(token);
+      props.setToken(token);
       setMessage("Success!");
       navigate("/");
     }

@@ -13,6 +13,7 @@ export default function Search(props) {
     setUsers(data);
   }
 
+  //handle input change
   function onSearchChange(e) {
     setSearchClause(e.target.value);
   }
