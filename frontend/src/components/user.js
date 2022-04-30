@@ -59,7 +59,6 @@ export default function User(props) {
       {userData !== undefined && (
         <div>
           <div className="profileWrapper">
-            <h1 className="heading">Your Profile</h1>
             <h2 className="username">@{userData.username}</h2>
             <p className="joinDate">
               joined on{" "}
