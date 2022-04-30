@@ -4,7 +4,7 @@ import LoginForm from "./loginForm";
 import Posts from "./posts";
 import DayJS from "react-dayjs";
 import { Button, Dropdown, DropdownButton } from "react-bootstrap";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../css/profile.css";
 
 export default function Profile(props) {

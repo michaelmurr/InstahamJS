@@ -10,7 +10,6 @@ export default function Upload(props) {
   const [text, setText] = useState("");
   const { token, setToken } = useToken();
   const navigate = useNavigate();
-  const [message, setMessage] = useState("");
 
   //update local state
   function onTextChange(event) {
@@ -31,10 +30,6 @@ export default function Upload(props) {
   const handleSubmit = () => async (event) => {
     event.preventDefault();
     const response = await uploadPost(text, token);
-    const json = await response.json();
-
-    console.log(response);
-    console.log(json);
     navigate("/");
   };
 
