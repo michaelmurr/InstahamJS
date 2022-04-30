@@ -9,13 +9,13 @@ import Nav from "./nav";
 import Feed from "./feed";
 import Profile from "./profile";
 import Upload from "./uploadForm";
-
 import LoginForm from "./loginForm";
 import SignupForm from "./signupForm";
 import Search from "./search";
+import User from "./user";
 
 export default function App() {
-  const { token, setToken } = useToken();
+  const { setToken } = useToken();
 
   const API = "https://instahamjs-backend.onrender.com";
   //const API = "http://localhost:4000";
@@ -25,16 +25,17 @@ export default function App() {
       <Router>
         <Nav />
         <Routes>
-          <Route path="/" exact element={<Feed api={API}/>} />
+          <Route path="/" exact element={<Feed api={API} />} />
           <Route
             path="/login"
             exact
-            element={<LoginForm setToken={setToken} />}
+            element={<LoginForm setToken={setToken} API={API} />}
           />
-          <Route path="/register" exact element={<SignupForm api={API}/>} />
-          <Route path="/api/upload" exact element={<Upload api={API}/>} />
-          <Route path="/profile" exact element={<Profile api={API}/>} />
-          <Route path="/search" exact element={<Search api={API}/>} />
+          <Route path="/register" exact element={<SignupForm api={API} />} />
+          <Route path="/api/upload" exact element={<Upload api={API} />} />
+          <Route path="/profile" exact element={<Profile api={API} />} />
+          <Route path="/search" exact element={<Search api={API} />} />
+          <Route path="/users/:id" element={<User api={API} />} />
         </Routes>
       </Router>
     </div>
