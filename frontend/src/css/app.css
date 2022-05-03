@@ -2,6 +2,18 @@ html{
     margin: 0;
     padding: 0;
 }
+
+@media only screen and (min-width: 768px){
+    .App{
+        margin: 0 20% 0 20%;
+    }
+}
+
+@media only screen and (min-width: 1400px){
+    .App{
+        margin: 0 40% 0 40%;
+    }
+}
 /*
 header{
     padding: 1rem 5%;

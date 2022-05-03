@@ -17,8 +17,8 @@ import User from "./user";
 export default function App() {
   const { setToken } = useToken();
 
-  const API = "https://instahamjs-backend.onrender.com";
-  //const API = "http://localhost:4000";
+  //const API = "https://instahamjs-backend.onrender.com";
+  const API = "http://localhost:4000";
 
   return (
     <div className="App">

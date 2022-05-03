@@ -21,7 +21,22 @@ li img{
 }
 
 .navbar{
+    margin-top: 10px;
     z-index: 99;
     box-shadow: 0 -0px 10px #AAA;
     background-color: #FFF;
+}
+
+@media only screen and (min-width: 768px){
+    .navbar{
+        width: 60%;
+        margin: 0 auto;
+    }
+}
+
+@media only screen and (min-width: 1400px){
+    .navbar{
+        width: 20%;
+        margin: 0 auto;
+    }
 }
