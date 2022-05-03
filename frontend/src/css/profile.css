@@ -9,3 +9,11 @@
 .heading{
     margin-bottom: 1.5rem;
 }
+
+.dropdown_profile{
+    margin-right: 5%;
+}
+h3{
+    text-decoration: none;
+    color: #000;
+}

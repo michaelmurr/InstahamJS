@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import {Button, Form } from "react-bootstrap";
 import {Link} from "react-router-dom";
 
+import "../css/search.css";
+
 export default function Search(props) {
   const [searchClause, setSearchClause] = useState("");
   const [users, setUsers] = useState([]);
@@ -19,7 +21,7 @@ export default function Search(props) {
   }
 
   return (
-    <div className="searchInput">
+    <div className="searchContainer">
       <h1>Search</h1>
       <Form>
         <Form.Control
@@ -33,14 +35,15 @@ export default function Search(props) {
             submitSearch(e);
           }}
         >
-          Submit
+          Find
         </Button>
       </Form>
+      <hr/>
       <div className="foundUsers">
         {users.map((user) => (
           <div key={user._id} className="user">
-            <Link to={`/users/${user._id}`}>
-              <h3>{user.username}</h3>
+            <Link to={`/users/${user._id}`} className="userLink">
+              <h3>@{user.username}</h3>
             </Link>
           </div>
         ))}

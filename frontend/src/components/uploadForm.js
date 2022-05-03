@@ -5,6 +5,7 @@ import { Button, Form } from "react-bootstrap";
 import { useState } from "react";
 import useToken from "./useToken";
 import LoginForm from "./loginForm";
+import "../css/upload.css";
 
 export default function Upload(props) {
   const [text, setText] = useState("");
@@ -38,6 +39,7 @@ export default function Upload(props) {
       {!token && <LoginForm setToken={setToken} />}
       {token && (
         <div className="uploadForm">
+          <h1>Upload Post</h1>
           <Form onSubmit={handleSubmit()}>
             <Form.Group
               className="mb-3"

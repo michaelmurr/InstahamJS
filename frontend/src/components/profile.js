@@ -54,6 +54,7 @@ export default function Profile(props) {
         <div>
           <div className="profileWrapper">
             <h1 className="heading">Your Profile</h1>
+            <hr />
             <h2 className="username">@{userData.username}</h2>
             <p className="joinDate">
               joined on{" "}
@@ -63,7 +64,7 @@ export default function Profile(props) {
               <Button onClick={logOut}>Log out</Button>
             </Link>
           </div>
-          <DropdownButton id="dropdown-basic-button" title="">
+          <DropdownButton id="dropdown-basic-button" title="" className="dropdown_profile">
             <Dropdown.Item
               onClick={() => {
                 deleteUser();

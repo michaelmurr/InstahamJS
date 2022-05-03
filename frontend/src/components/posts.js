@@ -6,6 +6,7 @@ import heart_icon from "../icons/heart_icon.png";
 import heart_icon_filled from "../icons/heart_icon_filled.png";
 import useToken from "./useToken";
 import { DropdownButton, Dropdown } from "react-bootstrap";
+import {Link} from "react-router-dom";
 
 export default function Posts(props) {
   const [posts, setPosts] = useState([]);
@@ -72,7 +73,9 @@ export default function Posts(props) {
     <div className="fetchedPosts">
       {posts.map((post) => (
         <div className="postContainer" key={post._id}>
-          <h1 className="username">@{post.username}</h1>
+          <Link to={`/users/${post.ownerID}`}>
+            <h3 className="username">@{post.username}</h3>
+          </Link>
           <div className="postDate">
             <DayJS format="DD. MMMM YYYY, H:mm">{post.uploadDate}</DayJS>
           </div>

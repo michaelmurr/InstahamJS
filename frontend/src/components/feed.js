@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Posts from "./posts";
 import useToken from "./useToken";
+import "../css/feed.css";
 
 export default function Feed(props) {
   const [posts, setPosts] = useState([]);
@@ -28,10 +29,10 @@ export default function Feed(props) {
           items[i] = item;
         }
       } else {
-        for (let i = 0; i < items.length; i++) {
+        for (let i = 0; i === items.length - 1; i++) {
           let item = { ...items[i] };
 
-          for (let j = 0; j < data.liked_posts.length; j++) {
+          for (let j = 0; j === data.liked_posts.length - 1; j++) {
             if (item._id === data.liked_posts[j]) {
               item.isLiked = true;
             } else {
@@ -51,8 +52,19 @@ export default function Feed(props) {
 
   return (
     <>
-      {isLoading && <h1>Loading...</h1>}
-      {!isLoading && <Posts posts={posts} uid={uid} api={props.api} />}
-    </>
+      {isLoading && (
+        <>
+          <h1 className="feedHeading">Loading...</h1>
+          <h4 className="feedHeading">Not Loading? Try refreshing the page!</h4>
+        </>
+      )}
+      {!isLoading && (
+      <>
+      <h1 className="feedHeading">Feed</h1>
+      <hr />
+      <Posts posts={posts} uid={uid} api={props.api} />
+      </>
+      )}
+      </>
   );
 }
