@@ -55,16 +55,17 @@ export default function Feed(props) {
       {isLoading && (
         <>
           <h1 className="feedHeading">Loading...</h1>
-          <h4 className="feedHeading">Not Loading? Try refreshing the page!</h4>
+          <h4 className="feedHeading">Please be patient, </h4>
+          <h4>it might take a while</h4>
         </>
       )}
       {!isLoading && (
-      <>
-      <h1 className="feedHeading">Feed</h1>
-      <hr />
-      <Posts posts={posts} uid={uid} api={props.api} />
-      </>
+        <>
+          <h1 className="feedHeading">Feed</h1>
+          <hr />
+          <Posts posts={posts} uid={uid} api={props.api} />
+        </>
       )}
-      </>
+    </>
   );
 }
