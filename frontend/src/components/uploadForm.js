@@ -9,6 +9,7 @@ import "../css/upload.css";
 
 export default function Upload(props) {
   const [text, setText] = useState("");
+  const [disableButton, setDisableButton] = useState(false);
   const { token, setToken } = useToken();
   const navigate = useNavigate();
 
@@ -30,7 +31,9 @@ export default function Upload(props) {
 
   const handleSubmit = () => async (event) => {
     event.preventDefault();
+    setDisableButton(true);
     const response = await uploadPost(text, token);
+    setDisableButton(false);
     navigate("/");
   };
 
@@ -53,7 +56,7 @@ export default function Upload(props) {
                 onChange={onTextChange}
               />
             </Form.Group>
-            <Button className="submitBtn" type="submit">
+            <Button className="submitBtn" type="submit" disabled={disableButton}>
               Post
             </Button>
           </Form>

@@ -9,6 +9,7 @@ export default function LoginForm(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState(" ");
+  const [disableButton, setDisableButton] = useState(false);
   const navigate = useNavigate("");
   
   //updates local state
@@ -33,12 +34,17 @@ export default function LoginForm(props) {
   //handles the submitting process
   const handleSubmit = () => async (event) => {
     event.preventDefault();
+    setDisableButton(true);
+
     try{
       const res = await loginUser();
       const token = await res.json();
 
       //exit if something failed
-      if(res.status !== 200) return setMessage(token.message);
+      if(res.status !== 200) {
+        setDisableButton(false);
+        return setMessage(token.message);
+      }
 
       //set token and redirect on success
       props.setToken(token);
@@ -84,7 +90,7 @@ export default function LoginForm(props) {
             </FloatingLabel>
           </Form.Group>
           <Form.Text className="text-muted">{message}</Form.Text>
-          <Button className="submitBtn" type="submit">
+          <Button className="submitBtn" type="submit" disabled={disableButton}>
             Login
           </Button>
         </Form>

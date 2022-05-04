@@ -11,6 +11,7 @@ export default function SignupForm(props) {
   const [password, setPassword] = useState("");
   const [confirm_password, setConfirm_Password] = useState("");
   const [message, setMessage] = useState("");
+  const [disableButton, setDisableButton] = useState(false);
   const navigate = useNavigate("/");
 
   //define onChange handlers
@@ -42,6 +43,8 @@ export default function SignupForm(props) {
   const handleSubmit = () => async (event) => {
     event.preventDefault();
 
+    setDisableButton(true);
+
     //check the input
     if (username.length < 5 || username.length > 16)
       return setMessage(
@@ -58,6 +61,7 @@ export default function SignupForm(props) {
 
       setMessage(msg.message);
       if (res.status === 200) return navigate("/login");
+      setDisableButton(false);
     } catch (e) {
       console.log(e);
     }
@@ -126,7 +130,7 @@ export default function SignupForm(props) {
           </Form.Group>
           <Form.Text className="text-muted">{message}</Form.Text>
           <br />
-          <Button className="submitBtn" type="submit">
+          <Button className="submitBtn" type="submit" disabled={disableButton}>
             Register
           </Button>
         </Form>
