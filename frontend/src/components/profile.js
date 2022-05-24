@@ -30,7 +30,6 @@ export default function Profile(props) {
     fetchUser();
   }, []);
 
-
   async function deleteUser() {
     const res = await fetch(props.api + "/api/deleteAccount", {
       method: "delete",
@@ -49,7 +48,12 @@ export default function Profile(props) {
   return (
     <>
       {!token && navigate("/login")}
-      {isLoading && token && <h1>Loading....</h1>}
+      {isLoading && token && (
+        <>
+          <h1>Loading....</h1>
+          <h1>This might take a minute or two</h1>
+        </>
+      )}
       {posts && userData && (
         <div>
           <div className="profileWrapper">
@@ -64,7 +68,11 @@ export default function Profile(props) {
               <Button onClick={logOut}>Log out</Button>
             </Link>
           </div>
-          <DropdownButton id="dropdown-basic-button" title="" className="dropdown_profile">
+          <DropdownButton
+            id="dropdown-basic-button"
+            title=""
+            className="dropdown_profile"
+          >
             <Dropdown.Item
               onClick={() => {
                 deleteUser();

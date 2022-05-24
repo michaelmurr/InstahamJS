@@ -55,8 +55,7 @@ export default function Feed(props) {
       {isLoading && (
         <>
           <h1 className="feedHeading">Loading...</h1>
-          <h4 className="feedHeading">Please be patient, </h4>
-          <h4>it might take a while</h4>
+          <h4 className="feedHeading">This might take a minute or two </h4>
         </>
       )}
       {!isLoading && (
