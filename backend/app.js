@@ -9,7 +9,6 @@ import { fileURLToPath } from "url";
 import bodyParser from "body-parser";
 
 //Routers
-import indexRouter from "./routes/indexRouter.js";
 import authRouter from "./routes/auth.js";
 import postRouter from "./routes/postsRouter.js";
 import userRouter from "./routes/userRouter.js";
@@ -24,29 +23,12 @@ const app = express();
 
 let corsOptions;
 
-if (process.env.PRODUCTION == "true") {
-  // Set up a whitelist and check against it:
-  const whitelist = ["https://instahamjs.netlify.app"];
-
-  corsOptions = {
-    origin: function (origin, callback) {
-      if (whitelist.indexOf(origin) !== -1) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true,
-    optionsSuccessStatus: 200,
-  };
-} else {
-  corsOptions = {
-    "origin": "*",
-    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-    "credentials": true,
-    "optionsSuccessStatus": 204,
-  };
-}
+corsOptions = {
+  origin: "*",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+  optionsSuccessStatus: 204,
+};
 
 app.use(healthRouter);
 
