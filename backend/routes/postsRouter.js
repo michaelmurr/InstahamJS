@@ -30,7 +30,7 @@ router.get("/posts", async (req, res) => {
 });
 
 router.get("/feed", verify, async (req, res) => {
-  const posts = await Post.find({}).sort({ uploadDate: -1 });
+  const posts = await Post.find({}); //.sort({ uploadDate: -1 });
   const user = await User.findById(req.user);
   const data = {
     posts,
@@ -80,8 +80,9 @@ router.patch("/remove_like/:id", verify, async (req, res) => {
 router.delete("/del_post/:id", verify, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
-    
-    if(post.ownerID !== req.user) return res.status(401).send({message: "Unauthorized"});
+
+    if (post.ownerID !== req.user)
+      return res.status(401).send({ message: "Unauthorized" });
 
     const deletedPost = await Post.findOneAndDelete({ _id: req.params.id });
     const updatedUser = await User.findOneAndUpdate(
