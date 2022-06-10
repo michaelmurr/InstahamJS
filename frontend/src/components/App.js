@@ -31,8 +31,12 @@ export default function App() {
             exact
             element={<LoginForm setToken={setToken} api={API} />}
           />
-          <Route path="/register" exact element={<SignupForm api={API} />} />
-          <Route path="/api/upload" exact element={<Upload api={API} />} />
+          <Route
+            path="/register"
+            exact
+            element={<SignupForm setToken={setToken} api={API} />}
+          />
+          <Route path="/upload" exact element={<Upload api={API} />} />
           <Route path="/profile" exact element={<Profile api={API} />} />
           <Route path="/search" exact element={<Search api={API} />} />
           <Route path="/users/:id" element={<User api={API} />} />

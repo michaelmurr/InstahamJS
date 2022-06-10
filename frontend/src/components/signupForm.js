@@ -57,11 +57,16 @@ export default function SignupForm(props) {
 
     try {
       const res = await signupUser({ username, email, password });
-      const msg = await res.json();
+      const token = await res.json();
 
-      setMessage(msg.message);
-      if (res.status === 200) return navigate("/login");
-      setDisableButton(false);
+      if (res.status !== 200) {
+        setDisableButton(false);
+        return setMessage(token.message);
+      }
+
+      props.setToken(token);
+      setMessage("Success!");
+      navigate("/upload");
     } catch (e) {
       console.log(e);
     }

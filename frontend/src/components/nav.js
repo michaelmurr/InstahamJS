@@ -23,7 +23,7 @@ export default function Nav() {
           </Link>
         </li>
         <li>
-          <Link to="/api/upload">
+          <Link to="/upload">
             <img src={upload_icon} alt="upload icon" />
           </Link>
         </li>

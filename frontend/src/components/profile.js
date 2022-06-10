@@ -41,7 +41,7 @@ export default function Profile(props) {
   }
 
   const logOut = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem("authToken");
     navigate("/login");
   };
 

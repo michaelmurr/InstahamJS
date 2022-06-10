@@ -37,7 +37,8 @@ router.post("/register", async (req, res) => {
       });
 
       user.save();
-      return res.status(200).send({ message: "Success!" });
+      const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
+      res.send({ token: token });
     } catch (err) {
       return res.send(err);
     }
@@ -46,7 +47,6 @@ router.post("/register", async (req, res) => {
 
 //Log into existing user
 router.post("/login", async (req, res) => {
-  
   //Convert username to lowercase before checking for it in the db
   const username = req.body.username.toLowerCase();
 
